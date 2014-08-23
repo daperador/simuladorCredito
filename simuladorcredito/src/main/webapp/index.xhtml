@@ -7,7 +7,8 @@ and open the template in the editor.
 <!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://java.sun.com/jsf/core">
     <h:head>
         <title>Simulador de Credito</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
@@ -15,17 +16,46 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <div class="panel-info">
-            <p:panelGrid columns="1" style="width: 100%">
-                <p:panelGrid columns="2" style="width: 100%" columnClasses="titulo-col1,titulo-col2">
-                    <h:outputText value="Simulador de Credito" class="h1"/>
+            <p:panelGrid columns="1" style="width: 100%; border: 0px;">
+                <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
+                    <h1>SimuladoresDeCredito.com</h1> 
                     <p:graphicImage url="img/simulador.jpg" style="float: right"/>
-                </p:panelGrid>
-                <p:panelGrid columns="2" style="width: 100%">
-                    <h:outputText value="asdfasdf asdfasdf"/>
-                    <p:inputText />
-                </p:panelGrid>
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width: 100%">
+                    <button style="float: right" onclick="PF('modalRegistro').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Registrarse</span></button>
+                    <button style="float: right" onclick="PF('modalRegistro').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Ingresar</span></button>
+                </h:panelGrid>
+                <h:panelGrid columns="1" style="width: 100%">
+                    <h1>Simuladores de Credito</h1>
+                    Es una empresa que le permite a sus clientes realizar simulaciones de creditos de acuerdo a sus lineas de credito que su empresa ofrezca 
+                </h:panelGrid>
             </p:panelGrid>
+            <p:dialog header="Registro de un usuario" widgetVar="modalRegistro" modal="true" id="modalRegistro" binding="#{registroAdministrador.registro}" visible="false">
+                <h:form id="formRegistro">
+                    <p:growl id="mensajes" showDetail="true" life="5000" />
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <h:outputLabel for="nombres" value="Nombres:"/>
+                        <p:inputText id="nombres" value="#{registroAdministrador.administrador.nombres}" required="true" label="Nombres"/>
+                        <h:outputLabel for="apellidos" value="Apellidos:"/>
+                        <p:inputText id="apellidos" value="#{registroAdministrador.administrador.apellidos}" required="true" label="Apellidos"/>
+                        <h:outputLabel for="email" value="Email:"/>
+                        <p:inputText id="email" value="#{registroAdministrador.administrador.email}" required="true" label="Email"
+                                     validatorMessage="Formato de correo inválido">
+                            <f:validateRegex pattern="^[_A-Za-z0-9-\+]+(\.[_A-Za-z0-9-]+)*@[A-Za-z0-9-]+(\.[A-Za-z0-9]+)*(\.[A-Za-z]{2,})$" />
+                        </p:inputText>
+                        <h:outputLabel for="contrasena" value="Contraseña:"/>
+                        <p:password id="contrasena" value="#{registroAdministrador.administrador.contrasena}" required="true" label="Contraseña"/>
+                        <h:outputLabel for="confirmarContrasena" value="Confirmar Contraseña:"/>
+                        <p:password id="confirmarContrasena" value="#{registroAdministrador.contrasena}" required="true" label="Confirmar Contraseña"/>
+                    </h:panelGrid>
+                    <p:commandButton value="enviar" action="#{registroAdministrador.guardarAdministrador()}" update=":modalRegistro :confirmacion"/>
+                </h:form>
+            </p:dialog>
+            <p:dialog id="confirmacion" header="Confirmación" widgetVar="modalConfirmacion" modal="true" binding="#{registroAdministrador.confirmacion}" visible="false">
+                <h:outputText value="Usted ha sido registrado en nuestra aplicación, para ingresar directamente por favor hagalo a traves de la siguiente URL: "/><br/>
+                <ul><li><h:outputLink value="#{registroAdministrador.url}" ><h:outputText value="#{registroAdministrador.url}"/></h:outputLink>a</li></ul>
+            </p:dialog>
         </div>
-        
+
     </h:body>
 </html>

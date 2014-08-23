@@ -1,0 +1,4 @@
+drop user simulador cascade;
+create user simulador identified by simulador;
+grant connect, resource, dba to simulador identified by simulador;
+
