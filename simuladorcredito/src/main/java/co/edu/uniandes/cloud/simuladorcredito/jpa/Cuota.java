@@ -46,9 +46,9 @@ public class Cuota implements Serializable {
     @SequenceGenerator(name="CuotaSeq",sequenceName="SEQ_CUOTA", allocationSize=1) 
     private BigDecimal id;
     @Column(name = "ID_PLAN")
-    private BigInteger idPlan;
+    private Integer idPlan;
     @Column(name = "NUMERO_CUOTA")
-    private BigInteger numeroCuota;
+    private Integer numeroCuota;
     @Column(name = "INTERESES")
     private Double intereses;
     @Column(name = "CAPITAL")
@@ -73,19 +73,19 @@ public class Cuota implements Serializable {
         this.id = id;
     }
 
-    public BigInteger getIdPlan() {
+    public Integer getIdPlan() {
         return idPlan;
     }
 
-    public void setIdPlan(BigInteger idPlan) {
+    public void setIdPlan(Integer idPlan) {
         this.idPlan = idPlan;
     }
 
-    public BigInteger getNumeroCuota() {
+    public Integer getNumeroCuota() {
         return numeroCuota;
     }
 
-    public void setNumeroCuota(BigInteger numeroCuota) {
+    public void setNumeroCuota(Integer numeroCuota) {
         this.numeroCuota = numeroCuota;
     }
 
@@ -143,7 +143,7 @@ public class Cuota implements Serializable {
 
     @Override
     public String toString() {
-        return "co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota[ id=" + id + " ]";
+        return this.numeroCuota+"\t"+this.total+"\t"+this.capital+"\t"+this.intereses+"\t"+Math.round(this.saldo*100)/100.0;
     }
     
 }

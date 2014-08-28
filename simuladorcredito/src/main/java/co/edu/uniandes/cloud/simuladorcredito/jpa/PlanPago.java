@@ -53,7 +53,7 @@ public class PlanPago implements Serializable {
     @Column(name = "ID")
     @GeneratedValue(generator="PlanSeq") 
     @SequenceGenerator(name="PlanSeq",sequenceName="SEQ_PLAN", allocationSize=1) 
-    private BigDecimal id;
+    private Integer id;
     @Column(name = "FECHA_CREACION")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
@@ -82,15 +82,15 @@ public class PlanPago implements Serializable {
     public PlanPago() {
     }
 
-    public PlanPago(BigDecimal id) {
+    public PlanPago(Integer id) {
         this.id = id;
     }
 
-    public BigDecimal getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
