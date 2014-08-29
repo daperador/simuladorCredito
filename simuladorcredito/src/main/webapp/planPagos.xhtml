@@ -13,33 +13,30 @@
         
         <h:form>
 
-                <p:messages id="messages" />
+                <p:messages id="mensajes" />
  
             <p:panel id="panel" style="margin-bottom:20px" header="Plan de pagos">
 
         <h:panelGrid columns="2" cellpadding="5">
 
             <h:outputLabel for="cedula" value="Cédula:" />
-            <p:inputText id="cedula" required="true" value="#{planPagos.pp.documento}" />
+            <p:inputText id="cedula" required="true" value="#{planPagos.pp.documento}" label="Cédula"/>
             
             <h:outputLabel for="fecha" value="Fecha de nacimiento:" />
-            <p:calendar id="fecha" showOn="button" value="#{planPagos.pp.fechaNacimiento}"/>
+            <p:calendar id="fecha" showOn="button" value="#{planPagos.pp.fechaNacimiento}" pattern="dd-MM-yyyy" mask="true" locale="co" navigator="true" label="Fecha de nacimiento"/>
             
             <h:outputLabel for="linea" value="Línea de crédito:" />
-            <p:selectOneMenu id="linea" value="#{planPagos.pp.idLinea}">
+            <p:selectOneMenu id="linea" value="#{planPagos.pp.idLinea.id}" label="Línea de crédito">
                 <f:selectItems value="#{planPagos.lineas}" />
             </p:selectOneMenu>
             
-            
-
-
             <h:outputLabel for="valor" value="Valor:" />
-            <p:inputText id="valor" required="true" value="#{planPagos.pp.valor}"/>
+            <p:inputText id="valor" required="true" value="#{planPagos.pp.valor}" label="Valor"/>
             
             <h:outputLabel for="plazo" value="Plazo:" />
-            <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}"/>
+            <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}" label="Plazo"/>
             
-            <p:commandButton value="Generar Plan de Pagos" update="panel"  />
+            <p:commandButton value="Generar Plan de Pagos" update="panel, mensajes"  />
  
         </h:panelGrid>
                 

@@ -46,7 +46,7 @@ public class Linea implements Serializable {
     @Column(name = "ID")
     @GeneratedValue(generator="LineaSeq") 
     @SequenceGenerator(name="LineaSeq",sequenceName="SEQ_LINEA", allocationSize=1) 
-    private BigDecimal id;
+    private Integer id;
     @Size(max = 50)
     @Column(name = "NOMBRE")
     private String nombre;
@@ -61,15 +61,15 @@ public class Linea implements Serializable {
     public Linea() {
     }
 
-    public Linea(BigDecimal id) {
+    public Linea(Integer id) {
         this.id = id;
     }
 
-    public BigDecimal getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
