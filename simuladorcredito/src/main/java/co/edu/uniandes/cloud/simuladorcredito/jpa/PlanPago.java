@@ -7,7 +7,6 @@
 package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.util.Date;
 import javax.persistence.Basic;
@@ -61,9 +60,9 @@ public class PlanPago implements Serializable {
     @Column(name = "DOCUMENTO")
     private String documento;
     @Column(name = "VALOR")
-    private BigInteger valor;
+    private Integer valor;
     @Column(name = "PLAZO")
-    private BigInteger plazo;
+    private Integer plazo;
     @Size(max = 20)
     @Column(name = "ESTADO")
     private String estado;
@@ -76,7 +75,7 @@ public class PlanPago implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
     @JoinColumn(name = "ID_LINEA", referencedColumnName = "ID")
-    @ManyToOne(fetch = FetchType.LAZY)
+    @ManyToOne(fetch = FetchType.EAGER)
     private Linea idLinea;
 
     public PlanPago() {
@@ -110,19 +109,19 @@ public class PlanPago implements Serializable {
         this.documento = documento;
     }
 
-    public BigInteger getValor() {
+    public Integer getValor() {
         return valor;
     }
 
-    public void setValor(BigInteger valor) {
+    public void setValor(Integer valor) {
         this.valor = valor;
     }
 
-    public BigInteger getPlazo() {
+    public Integer getPlazo() {
         return plazo;
     }
 
-    public void setPlazo(BigInteger plazo) {
+    public void setPlazo(Integer plazo) {
         this.plazo = plazo;
     }
 

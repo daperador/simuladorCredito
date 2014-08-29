@@ -7,7 +7,9 @@
 package co.edu.uniandes.cloud.simuladorcredito.persistencia;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Administrador;
+import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
+import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -35,5 +37,30 @@ public class AdministradorPersistencia {
     
     public List<Linea> consultarLineasAdministrador(Integer idAdministrador){
         return em.createNamedQuery("Linea.findByAdmiistrador").setParameter("idAdmon", idAdministrador).getResultList();
+    }
+    
+    public PlanPago guardarPlanPagos(PlanPago  pp){
+        em.persist(pp);
+        return pp;
+    }
+    
+    public List<Cuota> consultarCuotas(PlanPago pp){
+        return em.createNamedQuery("Cuota.findByIdPlan").setParameter("idPlan", pp.getId()).getResultList();
+    }
+    
+    public List<PlanPago> consultarPlanesEstado(String estado){
+        return em.createNamedQuery("PlanPago.findByEstado").setParameter("estado", estado).getResultList();
+    }
+    
+    public void guardarCuota(Cuota c){
+        em.persist(c);
+    }
+    
+    public PlanPago actualizarPlan(PlanPago pp){
+        return em.merge(pp);
+    }
+    
+    public PlanPago consultarPlanPago(Integer id){
+        return (PlanPago)em.createNamedQuery("PlanPago.findById").setParameter("id", id).getSingleResult();
     }
 }

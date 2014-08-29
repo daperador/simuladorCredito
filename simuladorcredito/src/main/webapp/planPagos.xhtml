@@ -2,71 +2,75 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui"
       xmlns:f="http://java.sun.com/jsf/core">
-    
-    
+
+
     <h:head>
         <title>Plan de pagos</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <link href="css/aplicacion.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
-        
+
         <h:form>
 
-                <p:messages id="mensajes" />
- 
+            <p:messages id="mensajes" />
+
             <p:panel id="panel" style="margin-bottom:20px" header="Plan de pagos">
 
-        <h:panelGrid columns="2" cellpadding="5">
+                <h:panelGrid columns="2" cellpadding="5">
 
-            <h:outputLabel for="cedula" value="Cédula:" />
-            <p:inputText id="cedula" required="true" value="#{planPagos.pp.documento}" label="Cédula"/>
-            
-            <h:outputLabel for="fecha" value="Fecha de nacimiento:" />
-            <p:calendar id="fecha" showOn="button" value="#{planPagos.pp.fechaNacimiento}" pattern="dd-MM-yyyy" mask="true" locale="co" navigator="true" label="Fecha de nacimiento"/>
-            
-            <h:outputLabel for="linea" value="Línea de crédito:" />
-            <p:selectOneMenu id="linea" value="#{planPagos.pp.idLinea.id}" label="Línea de crédito">
-                <f:selectItems value="#{planPagos.lineas}" />
-            </p:selectOneMenu>
-            
-            <h:outputLabel for="valor" value="Valor:" />
-            <p:inputText id="valor" required="true" value="#{planPagos.pp.valor}" label="Valor"/>
-            
-            <h:outputLabel for="plazo" value="Plazo:" />
-            <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}" label="Plazo"/>
-            
-            <p:commandButton value="Generar Plan de Pagos" update="panel, mensajes"  />
- 
-        </h:panelGrid>
-                
-         <p:dataTable var="car" >
-    <p:column headerText="Número de la cuota">
-        <h:outputText  />
-    </p:column>
- 
-    <p:column headerText="Intereses">
-        <h:outputText  />
-    </p:column>
- 
-    <p:column headerText="Capital (Amortización)">
-        <h:outputText  />
-    </p:column>
- 
-    <p:column headerText="Total a pagar">
-        <h:outputText  />
-    </p:column>
-             
-             <p:column headerText="Saldo pendiente">
-        <h:outputText  />
-    </p:column>
-</p:dataTable>
+                    <h:outputLabel for="idPlan" value="ID plan de pagos:" rendered="#{planPagos.readOnly}" />
+                    <p:inputText id="idPlan" value="#{planPagos.pp.documento}" label="ID plan de pagos" readonly="#{planPagos.readOnly}" rendered="#{planPagos.readOnly}"/>
 
-                
-                
-    </p:panel>
- 
-    
+                    <h:outputLabel for="cedula" value="Cédula:" />
+                    <p:inputText id="cedula" required="true" value="#{planPagos.pp.documento}" label="Cédula" readonly="#{planPagos.readOnly}"/>
+
+                    <h:outputLabel for="fecha" value="Fecha de nacimiento:" />
+                    <p:calendar id="fecha" showOn="button" value="#{planPagos.pp.fechaNacimiento}" pattern="dd-MM-yyyy" mask="true" locale="co" navigator="true" label="Fecha de nacimiento" readonly="#{planPagos.readOnly}"/>
+
+                    <h:outputLabel for="linea" value="Línea de crédito:" />
+                    <p:selectOneMenu id="linea" value="#{planPagos.pp.idLinea.id}" label="Línea de crédito" disabled="#{planPagos.readOnly}">
+                        <f:selectItems value="#{planPagos.lineas}" />
+                    </p:selectOneMenu>
+
+                    <h:outputLabel for="valor" value="Valor:" />
+                    <p:inputText id="valor" required="true" value="#{planPagos.pp.valor}" label="Valor" readonly="#{planPagos.readOnly}"/>
+
+                    <h:outputLabel for="plazo" value="Plazo:" />
+                    <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}" label="Plazo" readonly="#{planPagos.readOnly}"/>
+
+                    <p:commandButton value="#{planPagos.readOnly?'Actualizar':'Generar Plan de Pagos'}" update="panel, mensajes, cuotas" action="#{planPagos.accion}"  />
+                    <p:outputLabel value="El plan de pagos está siendo generado" rendered="#{planPagos.mostrarMensaje}" />
+
+                </h:panelGrid>
+
+                <p:dataTable id="cuotas" var="cuota" rendered="#{planPagos.mostrarCuotas}" value="#{planPagos.cuotas}" emptyMessage="No se han generado las cuotas">
+                    <p:column headerText="Número de la cuota">
+                        <h:outputText value="#{cuota.numeroCuota}" />
+                    </p:column>
+
+                    <p:column headerText="Intereses">
+                        <h:outputText value="#{cuota.intereses}" />
+                    </p:column>
+
+                    <p:column headerText="Capital (Amortización)">
+                        <h:outputText value="#{cuota.capital}" />
+                    </p:column>
+
+                    <p:column headerText="Total a pagar">
+                        <h:outputText value="#{cuota.total}" />
+                    </p:column>
+
+                    <p:column headerText="Saldo pendiente">
+                        <h:outputText value="#{cuota.saldo}" />
+                    </p:column>
+                </p:dataTable>
+
+
+
+            </p:panel>
+
+
 
 
         </h:form>

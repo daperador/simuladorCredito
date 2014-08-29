@@ -8,7 +8,6 @@ package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.math.BigInteger;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -29,7 +28,7 @@ import javax.validation.constraints.NotNull;
 @NamedQueries({
     @NamedQuery(name = "Cuota.findAll", query = "SELECT c FROM Cuota c"),
     @NamedQuery(name = "Cuota.findById", query = "SELECT c FROM Cuota c WHERE c.id = :id"),
-    @NamedQuery(name = "Cuota.findByIdPlan", query = "SELECT c FROM Cuota c WHERE c.idPlan = :idPlan"),
+    @NamedQuery(name = "Cuota.findByIdPlan", query = "SELECT c FROM Cuota c WHERE c.idPlan = :idPlan ORDER BY c.numeroCuota"),
     @NamedQuery(name = "Cuota.findByNumeroCuota", query = "SELECT c FROM Cuota c WHERE c.numeroCuota = :numeroCuota"),
     @NamedQuery(name = "Cuota.findByIntereses", query = "SELECT c FROM Cuota c WHERE c.intereses = :intereses"),
     @NamedQuery(name = "Cuota.findByCapital", query = "SELECT c FROM Cuota c WHERE c.capital = :capital"),
@@ -143,7 +142,7 @@ public class Cuota implements Serializable {
 
     @Override
     public String toString() {
-        return this.numeroCuota+"\t"+this.total+"\t"+this.capital+"\t"+this.intereses+"\t"+Math.round(this.saldo*100)/100.0;
+        return this.numeroCuota+"\t"+this.total+"\t"+this.capital+"\t"+this.intereses+"\t"+this.saldo;
     }
     
 }

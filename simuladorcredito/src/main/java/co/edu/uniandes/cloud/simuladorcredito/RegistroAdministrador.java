@@ -8,6 +8,7 @@ package co.edu.uniandes.cloud.simuladorcredito;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Administrador;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.AdministradorPersistencia;
+import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
@@ -21,7 +22,7 @@ import org.primefaces.component.dialog.Dialog;
  */
 @ManagedBean
 @SessionScoped
-public class RegistroAdministrador {
+public class RegistroAdministrador implements Serializable{
     private Administrador administrador=new Administrador();
     private String contrasena;
     private String url;

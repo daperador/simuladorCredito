@@ -15,21 +15,22 @@ import java.util.List;
  * @author Fredy
  */
 public class AmortizacionFrances {
-    public List<Cuota> generarCuotas(Double valor, Double tasa, Integer plazo, Integer idPlan){
+    public List<Cuota> generarCuotas(Integer valor, Double tasa, Integer plazo, Integer idPlan){
         Double cuota= valor / ((1-Math.pow(1+tasa/100, -plazo))/(tasa/100));
         System.out.println(cuota);
         List<Cuota> cuotas =new ArrayList<Cuota>();
+        Double valor2 = valor.doubleValue();
         for (int i=0; i<plazo; i++){
-            Double interes = valor * tasa/100;
+            Double interes = valor2 * tasa/100;
             Double amortizacion=cuota-interes;
-            valor-=amortizacion;
+            valor2-=amortizacion;
             
             Cuota c=new Cuota();
             c.setNumeroCuota(i+1);
             c.setIntereses(interes);
             c.setCapital(amortizacion);
             c.setTotal(cuota);
-            c.setSaldo(valor);
+            c.setSaldo(Math.round(valor2*100)/100.0);
             c.setIdPlan(idPlan);
             
             cuotas.add(c);
@@ -40,7 +41,7 @@ public class AmortizacionFrances {
     }
     
     public static void main(String args[]){
-        List<Cuota> cuotas=new AmortizacionFrances().generarCuotas(500000.0, 5.0, 10, 1);
+        List<Cuota> cuotas=new AmortizacionFrances().generarCuotas(500000, 5.0, 10, 1);
         for (Cuota c:cuotas)
             System.out.println(c);
     }

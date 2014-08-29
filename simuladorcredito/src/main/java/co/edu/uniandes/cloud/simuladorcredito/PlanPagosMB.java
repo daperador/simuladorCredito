@@ -6,10 +6,14 @@
 
 package co.edu.uniandes.cloud.simuladorcredito;
 
+import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.AdministradorPersistencia;
+import co.edu.uniandes.cloud.simuladorcredito.util.Constantes;
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
@@ -25,13 +29,14 @@ import javax.servlet.http.HttpServletRequest;
  */
 @ManagedBean(name = "planPagos")
 @SessionScoped
-public class PlanPagosMB {
+public class PlanPagosMB implements Serializable{
    
     private List<SelectItem> lineas = new ArrayList<SelectItem>();
     private Integer idAdmon=0;
     private PlanPago pp=new PlanPago();
     private int momento=1;
     private List<Linea> ls;
+    private List<Cuota> cuotas=new ArrayList<Cuota>();
     
     @EJB
     private AdministradorPersistencia dao;
@@ -40,6 +45,7 @@ public class PlanPagosMB {
     public void init(){
         HttpServletRequest req = (HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest();
         if (req.getParameter("id")!=null){
+            pp.setIdLinea(new Linea());
             idAdmon = Integer.parseInt(req.getParameter("id"));
             ls=dao.consultarLineasAdministrador(idAdmon);
             for (Linea l:ls){
@@ -75,7 +81,18 @@ public class PlanPagosMB {
     }
     
     public void accion(){
-        
+        if (momento==1){
+            pp.setEstado(Constantes.ESTADO_EN_PROCESO);
+            pp.setFechaCreacion(new Date());
+            pp=this.dao.guardarPlanPagos(pp);
+            momento=2;
+            System.out.println(pp.getId());
+        }else{
+            pp=this.dao.consultarPlanPago(pp.getId());
+            if (pp.getEstado().equals(Constantes.ESTADO_GENERADO)){
+                cuotas=dao.consultarCuotas(pp);    
+            }
+        }
     }
 
     public List<SelectItem> getLineas() {
@@ -86,5 +103,24 @@ public class PlanPagosMB {
         this.lineas = lineas;
     }
     
+    public boolean isReadOnly(){
+        return this.momento == 2;
+    }
+    
+    public boolean isMostrarMensaje(){
+        return this.isReadOnly() && this.pp.getEstado()!=null && this.pp.getEstado().equals(Constantes.ESTADO_EN_PROCESO);
+    }
+    
+    public boolean isMostrarCuotas(){
+        return this.isReadOnly() && this.pp.getEstado()!=null && this.pp.getEstado().equals(Constantes.ESTADO_GENERADO);
+    }
+
+    public List<Cuota> getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(List<Cuota> cuotas) {
+        this.cuotas = cuotas;
+    }
     
 }
