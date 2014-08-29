@@ -7,6 +7,7 @@
 package co.edu.uniandes.cloud.simuladorcredito.persistencia;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Administrador;
+import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -30,5 +31,9 @@ public class AdministradorPersistencia {
     public Administrador consultarAdministradorCorreo(String email){
         List<Administrador> lista=em.createNamedQuery("Administrador.findByEmail").setParameter("email", email).getResultList();
         return lista.isEmpty()?null:lista.get(0);
+    }
+    
+    public List<Linea> consultarLineasAdministrador(Integer idAdministrador){
+        return em.createNamedQuery("Linea.findByAdmiistrador").setParameter("idAdmon", idAdministrador).getResultList();
     }
 }

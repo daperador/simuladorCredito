@@ -46,7 +46,7 @@ public class Administrador implements Serializable {
     @Column(name = "ID")
     @GeneratedValue(generator="AdministradorSeq") 
     @SequenceGenerator(name="AdministradorSeq",sequenceName="SEQ_ADMINISTRADOR", allocationSize=1) 
-    private BigDecimal id;
+    private Integer id;
     @Size(max = 20)
     @Column(name = "NOMBRES")
     private String nombres;
@@ -69,15 +69,15 @@ public class Administrador implements Serializable {
     public Administrador() {
     }
 
-    public Administrador(BigDecimal id) {
+    public Administrador(Integer id) {
         this.id = id;
     }
 
-    public BigDecimal getId() {
+    public Integer getId() {
         return id;
     }
 
-    public void setId(BigDecimal id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 

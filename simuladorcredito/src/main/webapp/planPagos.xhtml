@@ -20,27 +20,24 @@
         <h:panelGrid columns="2" cellpadding="5">
 
             <h:outputLabel for="cedula" value="Cédula:" />
-            <p:inputText id="cedula" required="true" />
+            <p:inputText id="cedula" required="true" value="#{planPagos.pp.documento}" />
             
             <h:outputLabel for="fecha" value="Fecha de nacimiento:" />
-            <p:calendar id="fecha" showOn="button" />
+            <p:calendar id="fecha" showOn="button" value="#{planPagos.pp.fechaNacimiento}"/>
             
             <h:outputLabel for="linea" value="Línea de crédito:" />
-            <p:selectOneMenu id="linea" >
-                <f:selectItem itemLabel="Select One" itemValue="" />
-                <f:selectItem itemLabel="Xbox One" itemValue="Xbox One" />
-                <f:selectItem itemLabel="PS4" itemValue="PS4" />
-                <f:selectItem itemLabel="Wii U" itemValue="Wii U" />
+            <p:selectOneMenu id="linea" value="#{planPagos.pp.idLinea}">
+                <f:selectItems value="#{planPagos.lineas}" />
             </p:selectOneMenu>
             
             
 
 
             <h:outputLabel for="valor" value="Valor:" />
-            <p:inputText id="valor" required="true" />
+            <p:inputText id="valor" required="true" value="#{planPagos.pp.valor}"/>
             
             <h:outputLabel for="plazo" value="Plazo:" />
-            <p:inputText id="plazo" required="true" />
+            <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}"/>
             
             <p:commandButton value="Generar Plan de Pagos" update="panel"  />
  
