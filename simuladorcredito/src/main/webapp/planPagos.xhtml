@@ -39,30 +39,40 @@
                     <h:outputLabel for="plazo" value="Plazo:" />
                     <p:inputText id="plazo" required="true" value="#{planPagos.pp.plazo}" label="Plazo" readonly="#{planPagos.readOnly}"/>
 
-                    <p:commandButton value="#{planPagos.readOnly?'Actualizar':'Generar Plan de Pagos'}" update="panel, mensajes, cuotas" action="#{planPagos.accion}"  />
+                    <p:commandButton value="#{planPagos.readOnly?'Actualizar':'Generar Plan de Pagos'}" update="panel, mensajes, cuotas" action="#{planPagos.accion}" ajax="false" />
                     <p:outputLabel value="El plan de pagos está siendo generado" rendered="#{planPagos.mostrarMensaje}" />
 
                 </h:panelGrid>
 
                 <p:dataTable id="cuotas" var="cuota" rendered="#{planPagos.mostrarCuotas}" value="#{planPagos.cuotas}" emptyMessage="No se han generado las cuotas">
                     <p:column headerText="Número de la cuota">
-                        <h:outputText value="#{cuota.numeroCuota}" />
+                        <h:outputText value="#{cuota.numeroCuota}" >
+                            
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Intereses">
-                        <h:outputText value="#{cuota.intereses}" />
+                        <h:outputText value="#{cuota.intereses}" >
+                            <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Capital (Amortización)">
-                        <h:outputText value="#{cuota.capital}" />
+                        <h:outputText value="#{cuota.capital}" >
+                            <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Total a pagar">
-                        <h:outputText value="#{cuota.total}" />
+                        <h:outputText value="#{cuota.total}" >
+                            <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                        </h:outputText>
                     </p:column>
 
                     <p:column headerText="Saldo pendiente">
-                        <h:outputText value="#{cuota.saldo}" />
+                        <h:outputText value="#{cuota.saldo}" >
+                            <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                        </h:outputText>
                     </p:column>
                 </p:dataTable>
 
