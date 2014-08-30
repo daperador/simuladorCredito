@@ -31,7 +31,7 @@ public class FiltroLogin implements Filter{
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
         HttpServletRequest req = (HttpServletRequest)request;
         if(req.getSession().getAttribute("usuario")!=null){
-            doFilter(request, response, chain);
+            chain.doFilter(request, response);
         }
         ((HttpServletResponse)response).sendRedirect("/");
     }

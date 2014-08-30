@@ -7,6 +7,7 @@
 package co.edu.uniandes.cloud.simuladorcredito.negocio;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
+import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,7 +32,7 @@ public class AmortizacionFrances {
             c.setCapital(amortizacion);
             c.setTotal(cuota);
             c.setSaldo(Math.round(valor2*100)/100.0);
-            c.setIdPlan(idPlan);
+            c.setIdPlan(new PlanPago(idPlan));
             
             cuotas.add(c);
             

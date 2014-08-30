@@ -48,7 +48,7 @@ and open the template in the editor.
                         <h:outputLabel for="confirmarContrasena" value="Confirmar Contraseña:"/>
                         <p:password id="confirmarContrasena" value="#{registroAdministrador.contrasena}" required="true" label="Confirmar Contraseña"/>
                     </h:panelGrid>
-                    <p:commandButton value="enviar" action="#{registroAdministrador.guardarAdministrador()}" update=":modalRegistro :confirmacion"/>
+                    <p:commandButton value="enviar" action="#{registroAdministrador.guardarAdministrador()}" update=":modalRegistro :confirmacion" process="@form"/>
                 </h:form>
             </p:dialog>
             <p:dialog id="confirmacion" header="Confirmación" widgetVar="modalConfirmacion" modal="true" binding="#{registroAdministrador.confirmacion}" visible="false">
@@ -60,11 +60,11 @@ and open the template in the editor.
                     <p:growl id="mensajes" showDetail="true" life="5000" />
                     <h:panelGrid columns="2" style="width: 100%">
                         <h:outputLabel for="login" value="Usuario:"/>
-                        <p:inputText id="login" value="#{registroAdministrador.administrador.email}" required="true" label="Nombres"/>
+                        <p:inputText id="login" value="#{registroAdministrador.login}" required="true" label="Email"/>
                         <h:outputLabel for="password" value="Contraseña:"/>
-                        <p:password id="password" value="#{registroAdministrador.administrador.contrasena}" required="true" label="Contraseña"/>
+                        <p:password id="password" value="#{registroAdministrador.password}" required="true" label="Contraseña" />
                     </h:panelGrid>
-                    <p:commandButton value="Ingresar" action="#{registroAdministrador.ingresar()}"/>
+                    <p:commandButton value="Ingresar" action="#{registroAdministrador.ingresar()}" process="@form"/>
                 </h:form>
             </p:dialog>
         </div>

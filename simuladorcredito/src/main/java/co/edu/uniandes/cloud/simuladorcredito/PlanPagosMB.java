@@ -10,6 +10,7 @@ import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.AdministradorPersistencia;
+import co.edu.uniandes.cloud.simuladorcredito.persistencia.PlanPagosPersistencia;
 import co.edu.uniandes.cloud.simuladorcredito.util.Constantes;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -22,6 +23,7 @@ import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletRequest;
+import org.primefaces.component.dialog.Dialog;
 
 /**
  *
@@ -37,6 +39,8 @@ public class PlanPagosMB implements Serializable{
     private int momento=1;
     private List<Linea> ls;
     private List<Cuota> cuotas=new ArrayList<Cuota>();
+    
+    private List<PlanPago> planesPago;
     
     @EJB
     private AdministradorPersistencia dao;
@@ -122,5 +126,41 @@ public class PlanPagosMB implements Serializable{
     public void setCuotas(List<Cuota> cuotas) {
         this.cuotas = cuotas;
     }
+
+    @EJB
+    private PlanPagosPersistencia planPagosPersistencia;
     
+    public List<PlanPago> getPlanesPago() {
+        String usuario=((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession().getAttribute("usuario").toString();
+        planesPago=planPagosPersistencia.getPlanesPago(usuario);
+        return planesPago;
+    }
+
+    public void setPlanesPago(List<PlanPago> planesPago) {
+        this.planesPago = planesPago;
+    }
+    
+    private PlanPago detalle;
+    private Dialog panelDetalle;
+    
+    public void detalle(PlanPago planPago){
+        detalle=planPago;
+        panelDetalle.setVisible(true);
+    }
+
+    public PlanPago getDetallePlanPago() {
+        return detalle;
+    }
+
+    public void setDetallePlanPago(PlanPago detalle) {
+        this.detalle = detalle;
+    }
+
+    public Dialog getPanelDetalle() {
+        return panelDetalle;
+    }
+
+    public void setPanelDetalle(Dialog panelDetalle) {
+        this.panelDetalle = panelDetalle;
+    }
 }

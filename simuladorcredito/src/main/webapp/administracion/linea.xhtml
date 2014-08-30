@@ -16,6 +16,12 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <div class="panel-info">
+            <h:panelGroup>
+                <h:form>
+                    <p:commandButton value="Linea" action="linea.xhtml"/>
+                    <p:commandButton value="Plan de Pago" action="planPagos.xhtml"/>
+                </h:form>
+            </h:panelGroup>
             <h:panelGroup id="contenido">
                 <p:panel header="Lineas" rendered="#{not lineaMB.editar}">
                     <h:form>

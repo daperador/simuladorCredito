@@ -10,6 +10,7 @@ import co.edu.uniandes.cloud.simuladorcredito.jpa.Administrador;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
+import java.io.Serializable;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,7 +21,7 @@ import javax.persistence.PersistenceContext;
  * @author Daniel
  */
 @Stateless
-public class AdministradorPersistencia {
+public class AdministradorPersistencia implements Serializable {
     
     @PersistenceContext(unitName = "simuladorCreditoPU")
     private EntityManager em;
@@ -66,6 +67,6 @@ public class AdministradorPersistencia {
     
     public boolean login(String email, String password) {
         List<Administrador> lista=em.createNamedQuery("Administrador.findByEmailContrasena").setParameter("email", email).setParameter("contrasena", password).getResultList();
-        return lista.isEmpty();
+        return !lista.isEmpty();
     }
 }

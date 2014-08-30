@@ -11,8 +11,11 @@ import java.math.BigDecimal;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.SequenceGenerator;
@@ -44,8 +47,9 @@ public class Cuota implements Serializable {
     @GeneratedValue(generator="CuotaSeq") 
     @SequenceGenerator(name="CuotaSeq",sequenceName="SEQ_CUOTA", allocationSize=1) 
     private BigDecimal id;
-    @Column(name = "ID_PLAN")
-    private Integer idPlan;
+    @JoinColumn(name = "ID_PLAN")
+    @ManyToOne(cascade = {},fetch = FetchType.EAGER)
+    private PlanPago idPlan;
     @Column(name = "NUMERO_CUOTA")
     private Integer numeroCuota;
     @Column(name = "INTERESES")
@@ -72,11 +76,11 @@ public class Cuota implements Serializable {
         this.id = id;
     }
 
-    public Integer getIdPlan() {
+    public PlanPago getIdPlan() {
         return idPlan;
     }
 
-    public void setIdPlan(Integer idPlan) {
+    public void setIdPlan(PlanPago idPlan) {
         this.idPlan = idPlan;
     }
 

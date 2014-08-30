@@ -136,6 +136,6 @@
     </filter>
     <filter-mapping>
         <filter-name>filtroIngreso</filter-name>
-        <url-pattern>/administracion/*</url-pattern>
+        <url-pattern>/administracion1/*</url-pattern>
     </filter-mapping>
 </web-app>

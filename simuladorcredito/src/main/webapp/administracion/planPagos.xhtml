@@ -16,43 +16,101 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <div class="panel-info">
+            <h:panelGroup>
+                <h:form>
+                    <p:commandButton value="Linea" action="linea.xhtml"/>
+                    <p:commandButton value="Plan de Pago" action="planPagos.xhtml"/>
+                </h:form>
+            </h:panelGroup>
             <h:panelGroup id="contenido">
-                <p:panel header="Lineas" rendered="#{not lineaMB.editar}">
-                    <h:form>
-                        <p:commandButton value="Nueva Linea" action="#{lineaMB.nuevaLinea()}" update=":contenido"/>
-                        <p:dataTable value="#{lineaMB.lineas}" var="linea">
-                            <p:column headerText="id">
-                                <h:outputText value="#{linea.id}"/>
-                            </p:column>
-                            <p:column headerText="Nombre">
-                                <h:outputText value="#{linea.nombre}"/>
-                            </p:column>
-                            <p:column headerText="Tasa">
-                                <h:outputText value="#{linea.tasa}"/>
-                            </p:column>
-                            <p:column>
-                                <p:commandLink value="Editar" action="#{lineaMB.actualizar(linea.id)}" update=":contenido"/>
-                                <p:commandLink value="Borrar" action="#{lineaMB.borrar(linea.id)}" update=":contenido"/>
-                            </p:column>
-                        </p:dataTable>
-                    </h:form>
+                <p:panel header="Plan de Pagos">
+                    <p:dataTable value="#{planPagos.planesPago}" var="plan" 
+                                 paginator="true" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rows="50">
+                        <p:column headerText="Cedula del Solicitante">
+                            <h:outputText value="#{plan.documento}"/>
+                        </p:column>
+                        <p:column headerText="Valor del credito">
+                            <h:outputText value="#{plan.valor}"/>
+                        </p:column>
+                        <p:column headerText="Plazo (Meses)">
+                            <h:outputText value="#{plan.plazo}"/>
+                        </p:column>
+                        <p:column headerText="Línea de credito">
+                            <h:outputText value="#{plan.idLinea.nombre}"/>
+                        </p:column>
+                        <p:column headerText="Estado">
+                            <h:outputText value="#{plan.estado}"/>
+                        </p:column>
+                        <p:column headerText="Nivel de Riesgo">
+                            <h:outputText value="#{plan.nivelRiesgo}"/>
+                        </p:column>
+                        <p:column headerText="Fecha">
+                            <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
+                                <f:param value="#{plan.fechaCreacion}" />
+                            </h:outputFormat>
+                        </p:column>
+                        <p:column headerText="Detalle">
+                            <p:commandLink value="Ver Detalle" action="#{planPagos.detalle(plan)}" update=":panelDetalle"/>
+                        </p:column>
+                    </p:dataTable>
                 </p:panel>
-                <p:panel header="Lineas" rendered="#{lineaMB.editar}">
-                    <h:form>
-                        <h:panelGrid columns="3">
-                            
-                            <h:outputLabel for="nombre" value="Nombre: "/>
-                            <p:inputText id="nombre" value="#{lineaMB.linea.nombre}"/>
-                            <p:message for="nombre"/>
-                            
-                            <h:outputLabel for="tasa" value="Tasa: "/>
-                            <p:inputText id="tasa" value="#{lineaMB.linea.tasa}"/>
-                            <p:message for="tasa"/>
-                        </h:panelGrid>
-                        <p:commandButton value="Guardar" action="#{lineaMB.guardar()}" update=":contenido"/>
-                        <p:commandButton value="Cancelar" action="#{lineaMB.cancelar()}" update=":contenido"/>
-                    </h:form>
-                </p:panel>
+
+                <p:dialog modal="true" widgetVar="panelDetalle" id="panelDetalle" binding="#{planPagos.panelDetalle}"
+                          width="800px">
+                    <h:panelGrid columns="4">
+                        <h:outputText value="Id"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.id}"/>
+                        <h:outputText value="Cédula del Solicitante"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.documento}"/>
+                        <h:outputText value="Fecha de nacimiento"/>
+                        <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
+                            <f:param value="#{planPagos.detallePlanPago.fechaNacimiento}" />
+                        </h:outputFormat>
+                        <h:outputText value="Valor"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.valor}"/>
+                        <h:outputText value="Plazo"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.plazo}"/>
+                        <h:outputText value="Línea"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.idLinea.nombre}"/>
+                        <h:outputText value="Estado"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.estado}"/>
+                        <h:outputText value="Nivel de Riesgo"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.nivelRiesgo}"/>
+                        <h:outputText value="Fecha de Creación"/>
+                        <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
+                            <f:param value="#{planPagos.detallePlanPago.fechaCreacion}" />
+                        </h:outputFormat>
+                        <h:outputText value="Última Fecha de Modificación"/>
+                        <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
+                            <f:param value="#{planPagos.detallePlanPago.fechaModificacion}" />
+                        </h:outputFormat>
+                    </h:panelGrid>
+                    <p:dataTable value="#{planPagos.detallePlanPago.cuotas}" var="cuota"
+                                 paginator="true" 
+                                 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 rows="5">
+                        <p:column headerText="Id">
+                            <h:outputText value="#{cuota.id}"/>
+                        </p:column>
+                        <p:column headerText="Número de Cuota">
+                            <h:outputText value="#{cuota.numeroCuota}"/>
+                        </p:column>
+                        <p:column headerText="Abono a intereses">
+                            <h:outputText value="#{cuota.intereses}"/>
+                        </p:column>
+                        <p:column headerText="Abono a Capital">
+                            <h:outputText value="#{cuota.capital}"/>
+                        </p:column>
+                        <p:column headerText="Total a pagar">
+                            <h:outputText value="#{cuota.total}"/>
+                        </p:column>
+                        <p:column headerText="Saldo">
+                            <h:outputText value="#{cuota.saldo}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:dialog>
             </h:panelGroup>
         </div>
     </h:body>

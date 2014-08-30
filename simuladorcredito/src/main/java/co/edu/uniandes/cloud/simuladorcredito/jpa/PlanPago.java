@@ -9,6 +9,7 @@ package co.edu.uniandes.cloud.simuladorcredito.jpa;
 import java.io.Serializable;
 import java.math.BigInteger;
 import java.util.Date;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +20,8 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 import javax.persistence.SequenceGenerator;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -42,7 +45,9 @@ import javax.validation.constraints.Size;
     @NamedQuery(name = "PlanPago.findByEstado", query = "SELECT p FROM PlanPago p WHERE p.estado = :estado"),
     @NamedQuery(name = "PlanPago.findByNivelRiesgo", query = "SELECT p FROM PlanPago p WHERE p.nivelRiesgo = :nivelRiesgo"),
     @NamedQuery(name = "PlanPago.findByFechaNacimiento", query = "SELECT p FROM PlanPago p WHERE p.fechaNacimiento = :fechaNacimiento"),
-    @NamedQuery(name = "PlanPago.findByFechaModificacion", query = "SELECT p FROM PlanPago p WHERE p.fechaModificacion = :fechaModificacion")})
+    @NamedQuery(name = "PlanPago.findByFechaModificacion", query = "SELECT p FROM PlanPago p WHERE p.fechaModificacion = :fechaModificacion"),
+    @NamedQuery(name = "PlanPago.findByEmailAdministrador", query = "SELECT p FROM PlanPago p WHERE p.idLinea.idAdmon.email = :email order by p.fechaCreacion desc")
+})
 public class PlanPago implements Serializable {
     private static final long serialVersionUID = 1L;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -77,6 +82,10 @@ public class PlanPago implements Serializable {
     @JoinColumn(name = "ID_LINEA", referencedColumnName = "ID")
     @ManyToOne(fetch = FetchType.EAGER)
     private Linea idLinea;
+    
+    @OneToMany(cascade = {},fetch = FetchType.LAZY,mappedBy = "idPlan")
+    @OrderBy("id ASC")
+    private List<Cuota> cuotas;
 
     public PlanPago() {
     }
@@ -189,5 +198,14 @@ public class PlanPago implements Serializable {
     public String toString() {
         return "co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago[ id=" + id + " ]";
     }
+
+    public List<Cuota> getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(List<Cuota> cuotas) {
+        this.cuotas = cuotas;
+    }
+    
     
 }
