@@ -130,6 +130,12 @@
         <extension>svg#exoregular</extension>
         <mime-type>image/svg+xml</mime-type>
     </mime-mapping>
-    
-
+    <filter>
+        <filter-name>filtroIngreso</filter-name>
+        <filter-class>co.edu.uniandes.cloud.simuladorcredito.FiltroLogin</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>filtroIngreso</filter-name>
+        <url-pattern>/administracion/*</url-pattern>
+    </filter-mapping>
 </web-app>

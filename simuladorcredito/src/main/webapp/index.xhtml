@@ -23,7 +23,7 @@ and open the template in the editor.
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width: 100%">
                     <button style="float: right" onclick="PF('modalRegistro').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Registrarse</span></button>
-                    <button style="float: right" onclick="PF('modalRegistro').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Ingresar</span></button>
+                    <button style="float: right" onclick="PF('modalIngreso').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Ingresar</span></button>
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width: 100%">
                     <h1>Simuladores de Credito</h1>
@@ -54,6 +54,18 @@ and open the template in the editor.
             <p:dialog id="confirmacion" header="Confirmación" widgetVar="modalConfirmacion" modal="true" binding="#{registroAdministrador.confirmacion}" visible="false">
                 <h:outputText value="Usted ha sido registrado en nuestra aplicación, para ingresar directamente por favor hagalo a traves de la siguiente URL: "/><br/>
                 <ul><li><h:outputLink value="#{registroAdministrador.url}" ><h:outputText value="#{registroAdministrador.url}"/></h:outputLink></li></ul>
+            </p:dialog>
+            <p:dialog header="Ingresar" widgetVar="modalIngreso" modal="true" id="modalIngreso" binding="#{registroAdministrador.ingreso}" visible="false">
+                <h:form id="formIngreso">
+                    <p:growl id="mensajes" showDetail="true" life="5000" />
+                    <h:panelGrid columns="2" style="width: 100%">
+                        <h:outputLabel for="login" value="Usuario:"/>
+                        <p:inputText id="login" value="#{registroAdministrador.administrador.email}" required="true" label="Nombres"/>
+                        <h:outputLabel for="password" value="Contraseña:"/>
+                        <p:password id="password" value="#{registroAdministrador.administrador.contrasena}" required="true" label="Contraseña"/>
+                    </h:panelGrid>
+                    <p:commandButton value="Ingresar" action="#{registroAdministrador.ingresar()}"/>
+                </h:form>
             </p:dialog>
         </div>
 
