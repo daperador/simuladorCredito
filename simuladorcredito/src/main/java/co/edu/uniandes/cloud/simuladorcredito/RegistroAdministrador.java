@@ -14,6 +14,7 @@ import javax.faces.application.FacesMessage;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import org.primefaces.component.dialog.Dialog;
 
 /**
@@ -28,6 +29,10 @@ public class RegistroAdministrador implements Serializable{
     private String url;
     private Dialog confirmacion;
     private Dialog registro;
+    private Dialog ingreso;
+    
+    private String login;
+    private String password;
     
     @EJB
     private AdministradorPersistencia administradorPersistencia;
@@ -56,6 +61,18 @@ public class RegistroAdministrador implements Serializable{
             confirmacion.setVisible(true);
             registro.setVisible(false);
         }
+    }
+    
+    public String ingresar(){
+        boolean loggedin = administradorPersistencia.login(login,password);
+        if(loggedin){
+            ((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession().setAttribute("usuario", login);
+            return "administracion/linea.xhtml";
+        }else{
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage("contrasena", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",  "el usuario o la contraseña no es válida"));
+        }
+        return null;
     }
     
     public Administrador getAdministrador() {
@@ -97,5 +114,31 @@ public class RegistroAdministrador implements Serializable{
     public void setRegistro(Dialog registro) {
         this.registro = registro;
     }
+
+    public String getLogin() {
+        return login;
+    }
+
+    public void setLogin(String login) {
+        this.login = login;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Dialog getIngreso() {
+        return ingreso;
+    }
+
+    public void setIngreso(Dialog ingreso) {
+        this.ingreso = ingreso;
+    }
+    
+    
     
 }

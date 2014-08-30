@@ -63,4 +63,9 @@ public class AdministradorPersistencia {
     public PlanPago consultarPlanPago(Integer id){
         return (PlanPago)em.createNamedQuery("PlanPago.findById").setParameter("id", id).getSingleResult();
     }
+    
+    public boolean login(String email, String password) {
+        List<Administrador> lista=em.createNamedQuery("Administrador.findByEmailContrasena").setParameter("email", email).setParameter("contrasena", password).getResultList();
+        return lista.isEmpty();
+    }
 }
