@@ -23,13 +23,13 @@ public class LineaNegocio {
     @EJB
     private LineaPersistencia lineaPersistencia;
     
-    public Linea getLinea(BigDecimal id){
+    public Linea getLinea(Integer id){
         return lineaPersistencia.getLinea(id);
     }
     
-    public List<Linea> getLineas(){
+    /*public List<Linea> getLineas(){
         return lineaPersistencia.getLineas();
-    }
+    }*/
     
     public Linea actualizarLinea(Linea linea){
         return null;

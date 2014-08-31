@@ -11,9 +11,12 @@ import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.AdministradorPersistencia;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.LineaPersistencia;
 import java.io.Serializable;
-import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
+import javax.annotation.PostConstruct;
 import javax.ejb.EJB;
+import javax.faces.application.FacesMessage;
+import javax.faces.application.FacesMessage.Severity;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.SessionScoped;
 import javax.faces.context.FacesContext;
@@ -28,14 +31,21 @@ import javax.servlet.http.HttpServletRequest;
 public class LineaMB implements Serializable{
     
     private Linea linea;
-    private List<Linea> lineas;
+    private List<Linea> lineas=new ArrayList<Linea>();
     private boolean editar=false;
+    private Administrador administrador;
     
     @EJB
     private LineaPersistencia lineaPersistencia;
     
     @EJB
     private AdministradorPersistencia administradorPersistencia;
+    
+    @PostConstruct
+    public void init(){
+        String login=(String)((HttpServletRequest)FacesContext.getCurrentInstance().getExternalContext().getRequest()).getSession().getAttribute("usuario");
+        administrador=administradorPersistencia.consultarAdministradorCorreo(login);
+    } 
     
     public Linea getLinea() {
         return linea;
@@ -46,8 +56,8 @@ public class LineaMB implements Serializable{
     }
 
     public List<Linea> getLineas() {
-        if(lineas==null){
-            lineas=lineaPersistencia.getLineas();
+        if(lineas==null || lineas.size()==0){
+            lineas=lineaPersistencia.getLineas(administrador);
         }
         return lineas;
     }
@@ -81,13 +91,18 @@ public class LineaMB implements Serializable{
         editar=false;
     }
     
-    public void actualizar(BigDecimal id){
+    public void actualizar(Integer id){
         linea=lineaPersistencia.getLinea(id);
         editar=true;
     }
     
-    public void borrar(BigDecimal id){
-        lineaPersistencia.borrarLinea(id);
-        lineas=null;
+    public void borrar(Integer id){
+        try{
+            lineaPersistencia.borrarLinea(id);
+            lineas=null;
+        }catch(Exception e){
+            FacesContext context = FacesContext.getCurrentInstance();
+            context.addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se puede eliminar. Tiene asociados planes de pago.", null));
+        }
     }
 }

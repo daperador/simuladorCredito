@@ -6,6 +6,7 @@
 
 package co.edu.uniandes.cloud.simuladorcredito.persistencia;
 
+import co.edu.uniandes.cloud.simuladorcredito.jpa.Administrador;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Linea;
 import java.math.BigDecimal;
 import java.util.List;
@@ -22,14 +23,14 @@ public class LineaPersistencia {
     @PersistenceContext(unitName = "simuladorCreditoPU")
     private EntityManager em;
     
-    public Linea getLinea(BigDecimal id){
+    public Linea getLinea(Integer id){
         Linea resultado=em.find(Linea.class, id);
         em.detach(resultado);
         return resultado;
     }
     
-    public List<Linea> getLineas(){
-        return em.createNamedQuery("Linea.findAll").getResultList();
+    public List<Linea> getLineas(Administrador administrador){
+        return em.createNamedQuery("Linea.findByAdmiistrador").setParameter("idAdmon", administrador.getId()).getResultList();
     }
     
     public Linea actualizarLinea(Linea linea){
@@ -42,7 +43,7 @@ public class LineaPersistencia {
         return resultado;
     }
     
-    public void borrarLinea(BigDecimal id){
+    public void borrarLinea(Integer id){
         em.remove(em.find(Linea.class,id));
     }
     

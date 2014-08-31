@@ -10,7 +10,12 @@
         <link href="css/aplicacion.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
-
+        <h:form>
+                <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
+                    <h1>SimuladoresDeCredito.com</h1> 
+                    <p:graphicImage url="img/simulador.jpg" style="float: right"/>
+                </h:panelGrid>
+        </h:form>
         <h:form>
 
             <p:messages id="mensajes" />
@@ -44,7 +49,7 @@
 
                 </h:panelGrid>
 
-                <p:dataTable id="cuotas" var="cuota" rendered="#{planPagos.mostrarCuotas}" value="#{planPagos.cuotas}" emptyMessage="No se han generado las cuotas">
+                <p:dataTable id="cuotas" var="cuota" rendered="#{planPagos.mostrarCuotas}" value="#{planPagos.cuotas}" emptyMessage="No se han generado las cuotas" paginatorPosition="bottom">
                     <p:column headerText="Número de la cuota">
                         <h:outputText value="#{cuota.numeroCuota}" >
                             

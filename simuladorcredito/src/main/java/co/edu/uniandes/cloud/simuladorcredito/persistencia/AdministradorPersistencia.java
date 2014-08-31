@@ -28,7 +28,7 @@ public class AdministradorPersistencia implements Serializable {
     
     public void crearAdministrador(Administrador administrador){
         em.persist(administrador);
-        administrador.setUrl("/pyme/"+administrador.getId().longValue());
+        administrador.setUrl("/planPagos.xhtml?id="+administrador.getId().longValue());
     }
     
     public Administrador consultarAdministradorCorreo(String email){
@@ -46,7 +46,7 @@ public class AdministradorPersistencia implements Serializable {
     }
     
     public List<Cuota> consultarCuotas(PlanPago pp){
-        return em.createNamedQuery("Cuota.findByIdPlan").setParameter("idPlan", pp.getId()).getResultList();
+        return em.createNamedQuery("Cuota.findByIdPlan").setParameter("idPlan", pp).getResultList();
     }
     
     public List<PlanPago> consultarPlanesEstado(String estado){

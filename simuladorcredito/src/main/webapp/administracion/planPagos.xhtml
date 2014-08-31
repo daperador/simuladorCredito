@@ -16,34 +16,42 @@ and open the template in the editor.
     </h:head>
     <h:body>
         <div class="panel-info">
+            <h:form>
+                <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
+                    <h1>SimuladoresDeCredito.com</h1> 
+                    <p:graphicImage url="img/simulador.jpg" style="float: right"/>
+                </h:panelGrid>
+            </h:form>
             <h:panelGroup>
                 <h:form>
-                    <p:commandButton value="Linea" action="linea.xhtml"/>
-                    <p:commandButton value="Plan de Pago" action="planPagos.xhtml"/>
+                    <p:commandButton value="Líneas" action="linea.xhtml"/>
+                    <p:commandButton value="Planes de Pago" action="planPagos.xhtml"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup id="contenido">
                 <p:panel header="Plan de Pagos">
                     <p:dataTable value="#{planPagos.planesPago}" var="plan" 
-                                 paginator="true" 
+                                 paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rows="50">
-                        <p:column headerText="Cedula del Solicitante">
+                        <p:column headerText="Cédula del solicitante">
                             <h:outputText value="#{plan.documento}"/>
                         </p:column>
-                        <p:column headerText="Valor del credito">
-                            <h:outputText value="#{plan.valor}"/>
+                        <p:column headerText="Valor del crédito">
+                            <h:outputText value="#{plan.valor}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Plazo (Meses)">
                             <h:outputText value="#{plan.plazo}"/>
                         </p:column>
-                        <p:column headerText="Línea de credito">
+                        <p:column headerText="Línea de crédito">
                             <h:outputText value="#{plan.idLinea.nombre}"/>
                         </p:column>
                         <p:column headerText="Estado">
                             <h:outputText value="#{plan.estado}"/>
                         </p:column>
-                        <p:column headerText="Nivel de Riesgo">
+                        <p:column headerText="Nivel de riesgo">
                             <h:outputText value="#{plan.nivelRiesgo}"/>
                         </p:column>
                         <p:column headerText="Fecha">
@@ -59,55 +67,65 @@ and open the template in the editor.
 
                 <p:dialog modal="true" widgetVar="panelDetalle" id="panelDetalle" binding="#{planPagos.panelDetalle}"
                           width="800px">
-                    <h:panelGrid columns="4">
+                    <h:panelGrid columns="4" border="1">
                         <h:outputText value="Id"/>
                         <h:outputText value="#{planPagos.detallePlanPago.id}"/>
-                        <h:outputText value="Cédula del Solicitante"/>
+                        <h:outputText value="Cédula del solicitante"/>
                         <h:outputText value="#{planPagos.detallePlanPago.documento}"/>
                         <h:outputText value="Fecha de nacimiento"/>
                         <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
                             <f:param value="#{planPagos.detallePlanPago.fechaNacimiento}" />
                         </h:outputFormat>
                         <h:outputText value="Valor"/>
-                        <h:outputText value="#{planPagos.detallePlanPago.valor}"/>
+                        <h:outputText value="#{planPagos.detallePlanPago.valor}">
+                            <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                        </h:outputText>
                         <h:outputText value="Plazo"/>
                         <h:outputText value="#{planPagos.detallePlanPago.plazo}"/>
                         <h:outputText value="Línea"/>
                         <h:outputText value="#{planPagos.detallePlanPago.idLinea.nombre}"/>
                         <h:outputText value="Estado"/>
                         <h:outputText value="#{planPagos.detallePlanPago.estado}"/>
-                        <h:outputText value="Nivel de Riesgo"/>
+                        <h:outputText value="Nivel de riesgo"/>
                         <h:outputText value="#{planPagos.detallePlanPago.nivelRiesgo}"/>
-                        <h:outputText value="Fecha de Creación"/>
+                        <h:outputText value="Fecha de creación"/>
                         <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
                             <f:param value="#{planPagos.detallePlanPago.fechaCreacion}" />
                         </h:outputFormat>
-                        <h:outputText value="Última Fecha de Modificación"/>
+                        <h:outputText value="Última fecha de modificación"/>
                         <h:outputFormat value="{0, date, dd/MM/yyyy hh:mm:ss a}">
                             <f:param value="#{planPagos.detallePlanPago.fechaModificacion}" />
                         </h:outputFormat>
                     </h:panelGrid>
                     <p:dataTable value="#{planPagos.detallePlanPago.cuotas}" var="cuota"
-                                 paginator="true" 
+                                 paginator="true" paginatorPosition="bottom" emptyMessage="No existen planes de pago"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rows="5">
                         <p:column headerText="Id">
                             <h:outputText value="#{cuota.id}"/>
                         </p:column>
-                        <p:column headerText="Número de Cuota">
+                        <p:column headerText="Número de cuota">
                             <h:outputText value="#{cuota.numeroCuota}"/>
                         </p:column>
                         <p:column headerText="Abono a intereses">
-                            <h:outputText value="#{cuota.intereses}"/>
+                            <h:outputText value="#{cuota.intereses}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                            </h:outputText>
                         </p:column>
-                        <p:column headerText="Abono a Capital">
-                            <h:outputText value="#{cuota.capital}"/>
+                        <p:column headerText="Abono a capital">
+                            <h:outputText value="#{cuota.capital}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Total a pagar">
-                            <h:outputText value="#{cuota.total}"/>
+                            <h:outputText value="#{cuota.total}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                            </h:outputText>
                         </p:column>
                         <p:column headerText="Saldo">
-                            <h:outputText value="#{cuota.saldo}"/>
+                            <h:outputText value="#{cuota.saldo}">
+                                <f:convertNumber maxFractionDigits="2" pattern="###,###,##0.00" />
+                            </h:outputText>
                         </p:column>
                     </p:dataTable>
                 </p:dialog>

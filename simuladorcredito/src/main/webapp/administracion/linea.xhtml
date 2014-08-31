@@ -15,18 +15,26 @@ and open the template in the editor.
         <link href="css/aplicacion.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
+        
         <div class="panel-info">
+            <h:form>
+                <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
+                    <h1>SimuladoresDeCredito.com</h1> 
+                    <p:graphicImage url="img/simulador.jpg" style="float: right"/>
+                </h:panelGrid>
+            </h:form>
             <h:panelGroup>
                 <h:form>
-                    <p:commandButton value="Linea" action="linea.xhtml"/>
-                    <p:commandButton value="Plan de Pago" action="planPagos.xhtml"/>
+                    <p:commandButton value="Líneas" action="linea.xhtml"/>
+                    <p:commandButton value="Planes de Pago" action="planPagos.xhtml"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup id="contenido">
-                <p:panel header="Lineas" rendered="#{not lineaMB.editar}">
+                <p:messages showDetail="true" showSummary="false" />
+                <p:panel header="Líneas" rendered="#{not lineaMB.editar}">
                     <h:form>
-                        <p:commandButton value="Nueva Linea" action="#{lineaMB.nuevaLinea()}" update=":contenido"/>
-                        <p:dataTable value="#{lineaMB.lineas}" var="linea">
+                        <p:commandButton value="Nueva Línea" action="#{lineaMB.nuevaLinea()}" update=":contenido"/>
+                        <p:dataTable value="#{lineaMB.lineas}" var="linea" emptyMessage="No esisten líneas" paginatorPosition="bottom">
                             <p:column headerText="id">
                                 <h:outputText value="#{linea.id}"/>
                             </p:column>
@@ -38,6 +46,7 @@ and open the template in the editor.
                             </p:column>
                             <p:column>
                                 <p:commandLink value="Editar" action="#{lineaMB.actualizar(linea.id)}" update=":contenido"/>
+                                <p:spacer width="15" />
                                 <p:commandLink value="Borrar" action="#{lineaMB.borrar(linea.id)}" update=":contenido"/>
                             </p:column>
                         </p:dataTable>

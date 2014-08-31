@@ -15,6 +15,7 @@ and open the template in the editor.
         <link href="css/aplicacion.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
+           
         <div class="panel-info">
             <p:panelGrid columns="1" style="width: 100%; border: 0px;">
                 <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
@@ -26,8 +27,8 @@ and open the template in the editor.
                     <button style="float: right" onclick="PF('modalIngreso').show();" class="ui-button ui-widget ui-state-default ui-corner-all ui-button-text-only" ><span class="ui-button-text ui-c">Ingresar</span></button>
                 </h:panelGrid>
                 <h:panelGrid columns="1" style="width: 100%">
-                    <h1>Simuladores de Credito</h1>
-                    Es una empresa que le permite a sus clientes realizar simulaciones de creditos de acuerdo a sus lineas de credito que su empresa ofrezca 
+                    <h1>Simuladores de Crédito</h1>
+                    Es una empresa que le permite a sus clientes realizar simulaciones de créditos de acuerdo a las líneas de crédito que su empresa ofrezca 
                 </h:panelGrid>
             </p:panelGrid>
             <p:dialog header="Registro de un usuario" widgetVar="modalRegistro" modal="true" id="modalRegistro" binding="#{registroAdministrador.registro}" visible="false">
@@ -48,23 +49,25 @@ and open the template in the editor.
                         <h:outputLabel for="confirmarContrasena" value="Confirmar Contraseña:"/>
                         <p:password id="confirmarContrasena" value="#{registroAdministrador.contrasena}" required="true" label="Confirmar Contraseña"/>
                     </h:panelGrid>
-                    <p:commandButton value="enviar" action="#{registroAdministrador.guardarAdministrador()}" update=":modalRegistro :confirmacion" process="@form"/>
+                    <p:commandButton value="Enviar" action="#{registroAdministrador.guardarAdministrador()}" update=":modalRegistro :confirmacion" process="@form" />
                 </h:form>
             </p:dialog>
             <p:dialog id="confirmacion" header="Confirmación" widgetVar="modalConfirmacion" modal="true" binding="#{registroAdministrador.confirmacion}" visible="false">
-                <h:outputText value="Usted ha sido registrado en nuestra aplicación, para ingresar directamente por favor hagalo a traves de la siguiente URL: "/><br/>
+                <h:outputText value="Usted ha sido registrado en nuestra aplicación, para ingresar directamente por favor hágalo a traves de la siguiente URL: "/><br/>
                 <ul><li><h:outputLink value="#{registroAdministrador.url}" ><h:outputText value="#{registroAdministrador.url}"/></h:outputLink></li></ul>
             </p:dialog>
             <p:dialog header="Ingresar" widgetVar="modalIngreso" modal="true" id="modalIngreso" binding="#{registroAdministrador.ingreso}" visible="false">
+                            
                 <h:form id="formIngreso">
-                    <p:growl id="mensajes" showDetail="true" life="5000" />
+                    
+                    <p:growl id="mensajes" showDetail="true" life="5000" sticky="true" />
                     <h:panelGrid columns="2" style="width: 100%">
-                        <h:outputLabel for="login" value="Usuario:"/>
+                        <h:outputLabel for="login" value="Email:"/>
                         <p:inputText id="login" value="#{registroAdministrador.login}" required="true" label="Email"/>
                         <h:outputLabel for="password" value="Contraseña:"/>
                         <p:password id="password" value="#{registroAdministrador.password}" required="true" label="Contraseña" />
                     </h:panelGrid>
-                    <p:commandButton value="Ingresar" action="#{registroAdministrador.ingresar()}" process="@form"/>
+                    <p:commandButton value="Ingresar" action="#{registroAdministrador.ingresar()}" process="@form" update="mensajes"/>
                 </h:form>
             </p:dialog>
         </div>

@@ -70,7 +70,7 @@ public class RegistroAdministrador implements Serializable{
             return "administracion/linea.xhtml";
         }else{
             FacesContext context = FacesContext.getCurrentInstance();
-            context.addMessage("contrasena", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",  "el usuario o la contraseña no es válida"));
+            context.addMessage("contrasena", new FacesMessage(FacesMessage.SEVERITY_ERROR,"Error",  "El usuario o la contraseña no es válida"));
         }
         return null;
     }
