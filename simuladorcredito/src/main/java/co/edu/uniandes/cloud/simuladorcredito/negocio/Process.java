@@ -13,24 +13,24 @@ import co.edu.uniandes.cloud.simuladorcredito.util.Constantes;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import javax.ejb.EJB;
-import javax.ejb.Schedule;
-import javax.ejb.Stateless;
+//import javax.ejb.EJB;
+//import javax.ejb.Schedule;
+//import javax.ejb.Stateless;
 
 /**
  *
  * @author Fredy
  */
-@Stateless
+//@Stateless
 public class Process {
 
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
     
-    @EJB
+    //@EJB
     private AdministradorPersistencia dao;
     
-    @Schedule(minute = "*/3", hour="*", dayOfMonth = "*")
+    //@Schedule(minute = "*/3", hour="*", dayOfMonth = "*")
     public void procesar(){
         System.out.println("Procesando..."+Calendar.getInstance());
         
@@ -51,12 +51,17 @@ public class Process {
     
     public double calcularNivelRiesgo(){
         Calendar inicio=Calendar.getInstance();
-        int diferencia=0;
+        double diferencia=0;
         do{
             Calendar ahora=Calendar.getInstance();
-            diferencia = (int)(ahora.getTimeInMillis() - inicio.getTimeInMillis())*1000;
+            diferencia = (int)((ahora.getTimeInMillis() - inicio.getTimeInMillis())/1000);
+            //System.out.println(diferencia);
         }while(diferencia<25);
         
         return 1+(int)(Math.random()*10);
+    }
+    
+    public static void main(String args[]){
+        new Process().calcularNivelRiesgo();
     }
 }
