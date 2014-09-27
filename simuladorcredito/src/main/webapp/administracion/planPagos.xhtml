@@ -12,7 +12,7 @@ and open the template in the editor.
     <h:head>
         <title>Simulador de Credito</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-        <link href="css/aplicacion.css" rel="stylesheet" type="text/css"/>
+        <link href="/simuladorCredito/css/aplicacion.css" rel="stylesheet" type="text/css"/>
     </h:head>
     <h:body>
         <div class="panel-info">
@@ -30,7 +30,8 @@ and open the template in the editor.
             </h:panelGroup>
             <h:panelGroup id="contenido">
                 <p:panel header="Plan de Pagos">
-                    <p:dataTable value="#{planPagos.planesPago}" var="plan" 
+                    <p:commandButton value="Actualizar" action="#{planPagos.cargarPlanes}" update="listaPlanes" />
+                    <p:dataTable value="#{planPagos.planesPago}" var="plan" id="listaPlanes" emptyMessage="No se han creado planes"
                                  paginator="true" paginatorPosition="bottom"
                                  paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
                                  rows="50">
@@ -60,7 +61,7 @@ and open the template in the editor.
                             </h:outputFormat>
                         </p:column>
                         <p:column headerText="Detalle">
-                            <p:commandLink value="Ver Detalle" action="#{planPagos.detalle(plan)}" update=":panelDetalle" oncomplete="pan8elDetalle.show()"/>
+                            <p:commandLink value="Ver Detalle" action="#{planPagos.detalle(plan)}" update=":panelDetalle" oncomplete="PF('panelDetalleWV').show()"/>
                         </p:column>
                     </p:dataTable>
                 </p:panel>
@@ -68,7 +69,7 @@ and open the template in the editor.
                 
             </h:panelGroup>
             
-            <p:dialog modal="true" widgetVar="panelDetalle" id="panelDetalle" binding="#{planPagos.panelDetalle}"
+            <p:dialog modal="true" widgetVar="panelDetalleWV" id="panelDetalle" binding="#{planPagos.panelDetalle}"
                           width="800px">
                     <h:panelGrid columns="4" border="1">
                         <h:outputText value="Id"/>

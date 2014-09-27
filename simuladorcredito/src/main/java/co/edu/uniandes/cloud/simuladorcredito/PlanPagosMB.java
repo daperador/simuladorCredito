@@ -57,7 +57,6 @@ public class PlanPagosMB implements Serializable{
             }
             
         }
-        
     }
 
     public Integer getIdAdmon() {
@@ -166,5 +165,9 @@ public class PlanPagosMB implements Serializable{
 
     public void setPanelDetalle(Dialog panelDetalle) {
         this.panelDetalle = panelDetalle;
+    }
+    
+    public void cargarPlanes(){
+        this.getPlanesPago();
     }
 }
