@@ -19,13 +19,13 @@ and open the template in the editor.
             <h:form>
                 <h:panelGrid columns="2" style="width: 100%;" columnClasses="titulo-col1,titulo-col2">
                     <h1>SimuladoresDeCredito.com</h1> 
-                    <p:graphicImage url="img/simulador.jpg" style="float: right"/>
+                    <p:graphicImage url="/img/simulador.jpg" style="float: right"/>
                 </h:panelGrid>
             </h:form>
             <h:panelGroup>
                 <h:form>
-                    <p:commandButton value="Líneas" action="linea.xhtml"/>
-                    <p:commandButton value="Planes de Pago" action="planPagos.xhtml"/>
+                    <p:commandButton value="Líneas" action="/administracion/linea.xhtml" ajax="false"/>
+                    <p:commandButton value="Planes de Pago" action="/administracion/planPagos.xhtml" ajax="false"/>
                 </h:form>
             </h:panelGroup>
             <h:panelGroup id="contenido">
@@ -60,12 +60,15 @@ and open the template in the editor.
                             </h:outputFormat>
                         </p:column>
                         <p:column headerText="Detalle">
-                            <p:commandLink value="Ver Detalle" action="#{planPagos.detalle(plan)}" update=":panelDetalle"/>
+                            <p:commandLink value="Ver Detalle" action="#{planPagos.detalle(plan)}" update=":panelDetalle" oncomplete="pan8elDetalle.show()"/>
                         </p:column>
                     </p:dataTable>
                 </p:panel>
 
-                <p:dialog modal="true" widgetVar="panelDetalle" id="panelDetalle" binding="#{planPagos.panelDetalle}"
+                
+            </h:panelGroup>
+            
+            <p:dialog modal="true" widgetVar="panelDetalle" id="panelDetalle" binding="#{planPagos.panelDetalle}"
                           width="800px">
                     <h:panelGrid columns="4" border="1">
                         <h:outputText value="Id"/>
@@ -129,7 +132,6 @@ and open the template in the editor.
                         </p:column>
                     </p:dataTable>
                 </p:dialog>
-            </h:panelGroup>
         </div>
     </h:body>
 </html>

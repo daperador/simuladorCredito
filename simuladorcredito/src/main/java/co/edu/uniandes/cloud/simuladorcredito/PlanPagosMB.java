@@ -145,6 +145,10 @@ public class PlanPagosMB implements Serializable{
     
     public void detalle(PlanPago planPago){
         detalle=planPago;
+        detalle=this.dao.consultarPlanPago(planPago.getId());
+        if (detalle.getEstado().equals(Constantes.ESTADO_GENERADO)){
+            detalle.setCuotas(dao.consultarCuotas(detalle));
+        }
         panelDetalle.setVisible(true);
     }
 
