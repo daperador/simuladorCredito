@@ -8,6 +8,7 @@ package co.edu.uniandes.csw.simuladorcredito;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
+import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.dynamodbv2.*;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
@@ -16,19 +17,32 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.LocalSecondaryIndex;
 import com.amazonaws.services.dynamodbv2.model.Projection;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
  * @author Daniel
  */
 public class PruebaDB {
-    private final static BasicAWSCredentials credentials=new BasicAWSCredentials("AKIAIRBT4XN3M3SCL6JQ", "/dfp6UJEPOpt7cXfViPonCcqEVHordb8i/x1YdHf");
-    static AmazonDynamoDBClient client = new AmazonDynamoDBClient(credentials);
+    static{
+        try {
+            AWSCredentials credentials=new PropertiesCredentials(new File("c:/tmp/dynamo.properties"));
+            client = new AmazonDynamoDBClient(credentials);
+        } catch (IOException ex) {
+            Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (IllegalArgumentException ex) {
+            Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+    private static AmazonDynamoDBClient client ;
     
     public static void main(String[] args) {
         //crearTabla();
-        
+        System.out.println(client.listTables().getTableNames().size());
         DynamoDBMapper mapper = new DynamoDBMapper(client);
         /*Administrador adm=new Administrador();
         adm.setNombres("prueba 1");
@@ -63,4 +77,6 @@ public class PruebaDB {
         System.out.println(client.listTables().getTableNames().size());
         
     }
+    
+    
 }
