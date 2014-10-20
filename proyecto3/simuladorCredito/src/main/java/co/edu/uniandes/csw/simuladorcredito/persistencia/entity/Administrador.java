@@ -1,0 +1,86 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
+/**
+ *
+ * @author Daniel
+ */
+@DynamoDBTable(tableName="Administrador")
+public class Administrador {
+    @DynamoDBHashKey(attributeName = "id")
+    private Long id;
+    
+    @DynamoDBAttribute(attributeName = "identificador")
+    private Long identificador;
+    
+    @DynamoDBAttribute
+    private String nombres;
+    
+    @DynamoDBAttribute
+    private String apellidos;
+    
+    @DynamoDBAttribute
+    private String email;
+    
+    @DynamoDBAttribute
+    private String password;
+
+    
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getNombres() {
+        return nombres;
+    }
+
+    public void setNombres(String nombres) {
+        this.nombres = nombres;
+    }
+
+    public String getApellidos() {
+        return apellidos;
+    }
+
+    public void setApellidos(String apellidos) {
+        this.apellidos = apellidos;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public Long getIdentificador() {
+        return identificador;
+    }
+
+    public void setIdentificador(Long identificador) {
+        this.identificador = identificador;
+    }
+    
+    
+}
