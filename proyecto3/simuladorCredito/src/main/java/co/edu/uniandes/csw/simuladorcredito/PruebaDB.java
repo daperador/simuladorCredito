@@ -75,7 +75,6 @@ public class PruebaDB {
         adm3.setApellidos("Wilches");
         adm3.setEmail("fredy.wilches@gmail.com");
         adm3.setId(cuantos+1);
-        adm3.setIdentificador(79799225L);
         adm3.setNombres("Fredy");
         adm3.setPassword("pwd");
         
