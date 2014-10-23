@@ -12,20 +12,13 @@ import javax.xml.bind.annotation.XmlRootElement;
  * @author Daniel
  */
 @XmlRootElement
-public class RegistroDTO {
-    private Long id;
+public class RegistroDTO extends SuperDTO{
+    
     private String nombres;
     private String apellidos;
     private String email;
     private String password;
 
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNombres() {
         return nombres;

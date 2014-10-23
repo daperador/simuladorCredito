@@ -11,6 +11,7 @@ import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.dynamodbv2.*;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.CreateTableRequest;
 import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
@@ -20,6 +21,8 @@ import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -57,6 +60,27 @@ public class PruebaDB {
         System.out.println("adm: "+adm2);
         System.out.println("adm: "+adm2.getId());
         System.out.println("adm: "+adm2.getNombres());
+        System.out.println("adm: "+adm2.getApellidos());
+        System.out.println("adm: "+adm2.getPassword());
+        
+        
+        Map<String, List<Object>> datos=mapper.batchLoad(new ArrayList<Object>());
+        System.out.println(datos);
+        
+        long cuantos=mapper.count(Administrador.class, new DynamoDBScanExpression());
+        Administrador adm3=new Administrador();
+        adm3.setApellidos("Wilches");
+        adm3.setEmail("fredy.wilches@gmail.com");
+        adm3.setId(cuantos+1);
+        adm3.setIdentificador(79799225L);
+        adm3.setNombres("Fredy");
+        adm3.setPassword("pwd");
+        
+        mapper.save(adm3);
+        
+        cuantos=mapper.count(Administrador.class, new DynamoDBScanExpression());
+        
+        System.out.println(cuantos);
     }
 
     private static void crearTabla() {
