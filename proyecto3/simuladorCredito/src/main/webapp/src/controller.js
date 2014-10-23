@@ -9,7 +9,11 @@ module.controller('inicioCtrl', ['$scope', '$http', function($scope, $http) {
         $('#dlgRegistro').modal();
     };
     
-    $scope.aceptar=function(){
+    $scope.loguearse=function(){
+        $('#dlgLogin').modal();
+    };
+    
+    $scope.aceptarRegistro=function(){
         $http.post('./webresources/registro', $scope.datosFormulario, {}
                 ).success(function(data, status, headers, config) {
                     alert("Los datos han sido guardados con Exito: "+data.id);
