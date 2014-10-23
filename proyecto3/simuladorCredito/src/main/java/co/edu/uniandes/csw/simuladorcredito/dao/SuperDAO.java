@@ -51,5 +51,4 @@ public class SuperDAO <T extends SuperPojo> {
         return (T)mapper.load(clase, llave);
     }
     
-    
 }
