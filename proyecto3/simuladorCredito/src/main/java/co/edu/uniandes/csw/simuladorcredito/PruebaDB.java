@@ -6,7 +6,6 @@
 package co.edu.uniandes.csw.simuladorcredito;
 
 import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
-import co.edu.uniandes.csw.simuladorcredito.dto.RegistroDTO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
 import com.amazonaws.auth.AWSCredentials;
