@@ -4,20 +4,15 @@
  * and open the template in the editor.
  */
 
-package co.edu.uniandes.csw.simuladorcredito.dto;
+package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
+
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 
 /**
  *
  * @author Fredy
  */
-public class SuperDTO {
-    private Long id;   
-    public Long getId() {
-        return id;
-    }
-
+public class SuperPojo {
     public void setId(Long id) {
-        this.id = id;
-    }
-    
+    }     
 }

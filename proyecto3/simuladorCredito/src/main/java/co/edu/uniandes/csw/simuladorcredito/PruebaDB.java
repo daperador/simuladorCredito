@@ -5,7 +5,10 @@
  */
 package co.edu.uniandes.csw.simuladorcredito;
 
+import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
+import co.edu.uniandes.csw.simuladorcredito.dto.RegistroDTO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
@@ -56,7 +59,7 @@ public class PruebaDB {
         adm.setId(1L);
         mapper.save(adm);*/
     
-        Administrador adm2=mapper.load(Administrador.class,1L);
+        Administrador adm2=mapper.load(Administrador.class,4L);
         System.out.println("adm: "+adm2);
         System.out.println("adm: "+adm2.getId());
         System.out.println("adm: "+adm2.getNombres());
@@ -81,6 +84,12 @@ public class PruebaDB {
         cuantos=mapper.count(Administrador.class, new DynamoDBScanExpression());
         
         System.out.println(cuantos);
+        
+        AdministradorDAO dao=new AdministradorDAO();
+        SuperPojo entity=dao.leer(Administrador.class, 5L);
+        System.out.println(entity);
+        
+        
     }
 
     private static void crearTabla() {

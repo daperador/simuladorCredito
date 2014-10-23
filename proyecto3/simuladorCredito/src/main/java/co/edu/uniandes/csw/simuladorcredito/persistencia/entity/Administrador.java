@@ -14,7 +14,8 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
  * @author Daniel
  */
 @DynamoDBTable(tableName="Administrador")
-public class Administrador {
+public class Administrador extends SuperPojo{
+    
     @DynamoDBHashKey(attributeName = "id")
     private Long id;
     
@@ -33,14 +34,7 @@ public class Administrador {
     @DynamoDBAttribute
     private String password;
 
-    
-    public Long getId() {
-        return id;
-    }
 
-    public void setId(Long id) {
-        this.id = id;
-    }
 
     public String getNombres() {
         return nombres;
@@ -82,5 +76,12 @@ public class Administrador {
         this.identificador = identificador;
     }
     
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }    
     
 }
