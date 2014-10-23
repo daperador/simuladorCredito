@@ -19,9 +19,6 @@ public class Administrador extends SuperPojo{
     @DynamoDBHashKey(attributeName = "id")
     private Long id;
     
-    @DynamoDBAttribute(attributeName = "identificador")
-    private Long identificador;
-    
     @DynamoDBAttribute
     private String nombres;
     
@@ -68,14 +65,6 @@ public class Administrador extends SuperPojo{
         this.password = password;
     }
 
-    public Long getIdentificador() {
-        return identificador;
-    }
-
-    public void setIdentificador(Long identificador) {
-        this.identificador = identificador;
-    }
-    
     public Long getId() {
         return id;
     }
