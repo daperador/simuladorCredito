@@ -27,7 +27,7 @@ module.controller('inicioCtrl', ['$scope', '$http', function($scope, $http) {
         $http.post('./webresources/login', $scope.datosFormulario, {}
                 ).success(function(data, status, headers, config) {
                     if (data==false){
-                        alert("EL email o contraseña son erróneos");
+                        alert("El email o contraseña son erróneos");
                     }else
                         alert("Redireccionar a: "+data);
                     $('#dlgLogin').modal('toggle');
