@@ -5,6 +5,7 @@
  */
 package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
 
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
@@ -13,6 +14,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
  */
 @DynamoDBTable(tableName="Linea")
 public class Linea extends SuperPojo{
+    @DynamoDBHashKey(attributeName = "id")
     private Long id;
     private String nombre;
     private Double tasa;
