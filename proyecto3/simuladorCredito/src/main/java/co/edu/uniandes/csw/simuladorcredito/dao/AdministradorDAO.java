@@ -6,10 +6,34 @@
 
 package co.edu.uniandes.csw.simuladorcredito.dao;
 
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+
 /**
  *
  * @author Fredy
  */
 public class AdministradorDAO extends SuperDAO{
+    
+    public Administrador login(Administrador usr){
+        DynamoDBScanExpression scanExpression = new DynamoDBScanExpression();
+        scanExpression.addFilterCondition("email", 
+                new Condition()
+                    .withComparisonOperator(ComparisonOperator.EQ)
+                    .withAttributeValueList(new AttributeValue().withS(usr.getEmail())));
+        
+        PaginatedScanList<Administrador> pql = mapper.scan(Administrador.class, scanExpression);
+        if (pql.size()>0){
+            return pql.get(0);
+        }else{
+            return null;
+        }
+    }
     
 }

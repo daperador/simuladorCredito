@@ -23,4 +23,17 @@ module.controller('inicioCtrl', ['$scope', '$http', function($scope, $http) {
                 });
 
     };
+    $scope.aceptarLogin=function(){
+        $http.post('./webresources/login', $scope.datosFormulario, {}
+                ).success(function(data, status, headers, config) {
+                    if (data==false){
+                        alert("EL email o contraseña son erróneos");
+                    }else
+                        alert("Redireccionar a: "+data);
+                    $('#dlgLogin').modal('toggle');
+                }).error(function(data, status, headers, config) {
+                    alert('Error al consultar la información, por favor intente más tarde');
+                });
+
+    };
 }]);

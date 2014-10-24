@@ -38,8 +38,10 @@ public class SuperDAO <T extends SuperPojo> {
     protected static DynamoDBMapper mapper = new DynamoDBMapper(client);
     
     public SuperPojo insertar(SuperPojo objeto){
-        long cuantos=mapper.count(objeto.getClass(), new DynamoDBScanExpression());
-        objeto.setId(cuantos+1);
+        
+        //long cuantos=mapper.count(objeto.getClass(), new DynamoDBScanExpression());
+        //objeto.setId(cuantos+1);
+        objeto.setId(SecuenciaDAO.getInstancia().getSiguiente(objeto.getClass()));
         mapper.save(objeto);
         return objeto;
     }
