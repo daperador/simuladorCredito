@@ -106,9 +106,11 @@ public class PruebaDB {
 //        
 //        System.out.println(cuantos);
 //        
-//        AdministradorDAO dao=new AdministradorDAO();
-//        SuperPojo entity=dao.leer(Administrador.class, 5L);
-//        System.out.println(entity);
+        AdministradorDAO dao=new AdministradorDAO();
+        Administrador entity=(Administrador)dao.leer(Administrador.class, 5L);
+        System.out.println(entity.getEmail());
+        System.out.println(entity.getPassword());
+        System.out.println(entity);
 //        
 //        
     }

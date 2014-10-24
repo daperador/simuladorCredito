@@ -24,7 +24,7 @@ public class LoginServicio {
     
     @POST
     public boolean login(Administrador usuario){
-        AdministradorDAO dao=new AdministradorDAO();
+            AdministradorDAO dao=new AdministradorDAO();
         Administrador a = dao.login(usuario);
         if (a==null){
             return false;
