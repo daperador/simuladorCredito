@@ -7,6 +7,7 @@
 package co.edu.uniandes.csw.simuladorcredito.dao;
 
 import co.edu.uniandes.csw.simuladorcredito.PruebaDB;
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Secuencia;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.PropertiesCredentials;
@@ -34,7 +35,7 @@ public class SuperDAO <T extends SuperPojo> {
         }
     }
     private static AmazonDynamoDBClient client;
-    private static DynamoDBMapper mapper = new DynamoDBMapper(client);
+    protected static DynamoDBMapper mapper = new DynamoDBMapper(client);
     
     public SuperPojo insertar(SuperPojo objeto){
         long cuantos=mapper.count(objeto.getClass(), new DynamoDBScanExpression());
@@ -50,5 +51,6 @@ public class SuperDAO <T extends SuperPojo> {
     public T leer(Class clase, Long llave){
         return (T)mapper.load(clase, llave);
     }
+    
     
 }

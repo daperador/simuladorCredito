@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.simuladorcredito;
 
 import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
+import co.edu.uniandes.csw.simuladorcredito.dao.SecuenciaDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Secuencia;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
 import com.amazonaws.auth.AWSCredentials;
 import com.amazonaws.auth.BasicAWSCredentials;
@@ -42,7 +44,7 @@ import java.util.logging.Logger;
 public class PruebaDB {
     static{
         try {
-            AWSCredentials credentials=new PropertiesCredentials(new File("/Users/efrainaperador/documents/dynamo.properties"));
+            AWSCredentials credentials=new PropertiesCredentials(new File("/tmp/dynamo.properties"));
             client = new AmazonDynamoDBClient(credentials);
         } catch (IOException ex) {
             Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);
@@ -53,10 +55,20 @@ public class PruebaDB {
     private static AmazonDynamoDBClient client ;
     
     public static void main(String[] args) {
+
+        //crearTablaSecuencia();
+        
+        Secuencia s=SecuenciaDAO.getInstancia().leer("Administrador");
+        System.out.println(s);
+        
+        //crearTabla();
+        System.out.println(client.listTables().getTableNames().size());
+
 //        crearTablaLinea();
 //        crearTablaPlanPago();
         
 //        System.out.println(client.listTables().getTableNames().size());
+
         DynamoDBMapper mapper = new DynamoDBMapper(client);
         //createLinea(mapper);
         consultarLinea(mapper);
@@ -176,7 +188,29 @@ public class PruebaDB {
         
         System.out.println(client.listTables().getTableNames().size());
         
+        
+        
     }
     
+    private static void crearTablaSecuencia() {
+        System.out.println(client.listTables().getTableNames().size());
+        
+        CreateTableRequest ctr=new CreateTableRequest()
+                .withTableName("Secuencia")
+                .withProvisionedThroughput(new ProvisionedThroughput(1L, 1L));
+        
+        ctr.setAttributeDefinitions(new ArrayList<AttributeDefinition>());
+        ctr.getAttributeDefinitions().add(new AttributeDefinition("tabla", "S"));
+        
+        ctr.setKeySchema(new ArrayList<KeySchemaElement>());
+        ctr.getKeySchema().add(new KeySchemaElement("tabla", "HASH"));
+        
+        client.createTable(ctr);
+        
+        System.out.println(client.listTables().getTableNames().size());
+        
+        
+        
+    }
     
 }
