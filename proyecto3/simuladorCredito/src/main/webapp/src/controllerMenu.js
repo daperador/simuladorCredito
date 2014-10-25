@@ -14,4 +14,8 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.listarPlanes=function(){
         $('#dlgPlanes').modal();
     };
+    $scope.detallePlan=function(){
+        $('#dlgPlan').modal();
+    };
+    
 }]);
