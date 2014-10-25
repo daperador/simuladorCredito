@@ -29,7 +29,9 @@ public class ApplicationConfig extends Application {
      * If required, comment out calling this method in getClasses().
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
+        resources.add(co.edu.uniandes.csw.simuladorcredito.LineaServicio.class);
         resources.add(co.edu.uniandes.csw.simuladorcredito.LoginServicio.class);
+        resources.add(co.edu.uniandes.csw.simuladorcredito.PlanPagoServicio.class);
         resources.add(co.edu.uniandes.csw.simuladorcredito.RegistroServicio.class);
         resources.add(org.netbeans.rest.application.config.GsonMessageBodyHandler.class);
     }

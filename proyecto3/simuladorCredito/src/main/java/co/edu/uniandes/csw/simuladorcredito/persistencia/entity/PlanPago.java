@@ -26,7 +26,7 @@ public class PlanPago extends SuperPojo{
     private Double nivelRiesgo;
     private Date fechaNacimiento;
     private Date fechaModificacion;
-    private Long idLinea;
+    private Linea Linea;
 
     public Long getId() {
         return id;
@@ -101,13 +101,13 @@ public class PlanPago extends SuperPojo{
         this.fechaModificacion = fechaModificacion;
     }
 
-    public Long getIdLinea() {
-        return idLinea;
+    public Linea getLinea() {
+        return Linea;
     }
 
-    public void setIdLinea(Long idLinea) {
-        this.idLinea = idLinea;
+    public void setLinea(Linea Linea) {
+        this.Linea = Linea;
     }
-    
+
     
 }

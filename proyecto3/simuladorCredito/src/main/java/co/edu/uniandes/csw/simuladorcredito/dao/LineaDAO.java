@@ -6,6 +6,11 @@
 package co.edu.uniandes.csw.simuladorcredito.dao;
 
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
+import com.amazonaws.services.dynamodbv2.model.Condition;
+import java.util.List;
 
 /**
  *
@@ -13,4 +18,14 @@ import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
  */
 public class LineaDAO extends SuperDAO<Linea>{
     
+    public List<Linea> getLineaAdministrador(String idAdministrador){
+        DynamoDBScanExpression dbscan = new DynamoDBScanExpression();
+        dbscan.addFilterCondition("administrador", 
+                new Condition()
+                        .withComparisonOperator(ComparisonOperator.EQ)
+                        .withAttributeValueList(new AttributeValue().withN(idAdministrador)));
+        
+        List<Linea> lista = mapper.scan(Linea.class, dbscan);
+        return lista;
+    }
 }

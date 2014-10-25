@@ -1,54 +1,95 @@
 <div>
-    <form name="planPagos" role="form">
-        <p>
-            <label for="lineaCredito">Linea de credito:</label>
-            <select id="lineaCredito"
-                    required="true"
-                    ng-required="true"
-                    ng-model="datosPlanPagos.lineaCredito">
-                
-            </select>
-        </p>
-        <p>
-            <label for="cedula">C&eacute;dula:</label>
-            <input type="text" 
-                   id="cedula" 
-                   class="form-control required"
-                   required="true"
-                   ng-required="true"
-                   ng-model="datosPlanPagos.cedula"/>
-        </p>
-        <p>
-            <label for="fechaNacimiento">Fecha de nacimiento:</label>
-            <input type="text" 
-                   id="fechaNacimiento" 
-                   class="form-control required"
-                   required="true"
-                   ng-required="true"
-                   ng-model="datosPlanPagos.fechaNacimiento"/>
-        </p>
-        
-        <p>
-            <label for="valor">Valor:</label>
-            <input type="text" 
-                   id="valor" 
-                   class="form-control required"
-                   required="true"
-                   ng-required="true"
-                   ng-model="datosPlanPagos.valor"/>
-        </p>
-        <p>
-            <label for="plazo">Plazo:</label>
-            <input type="text" 
-                   id="plazo" 
-                   class="form-control required"
-                   required="true"
-                   ng-required="true"
-                   ng-model="datosPlanPagos.plazo"/>
-        </p>
-        <p>
-            <input type="submit" value="Generar" />
-            <input type="button" value="Limpiar" ng-click="limpiar()"/>
-        </p>
-    </form>
-</div>
+    <div class="panel-info">
+        <nav role="navigation" class="navbar navbar-default">
+            <div class="container-fluid">
+                <div class="navbar-header">
+                    <a href="#" class="navbar-brand">Simulador de Crédito</a>
+                </div>
+                <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
+                    <button class="btn btn-default navbar-btn" type="button" ng-click="registrar()" ng-hide="generando">Generar Plan de Pagos</button>
+                    <button class="btn btn-default navbar-btn" type="button" ng-click="actualizar()" ng-show="generando">Actualizar</button>
+                    <button class="btn btn-default navbar-btn" type="button" ng-click="limpiar()" ng-show="generando">Nuevo Plan de Pagos</button>
+                </div>
+            </div>
+        </nav>
+        <div class="row">
+            <div class="col-md-6">
+                <h1>SimuladoresDeCredito.com</h1>
+            </div>
+            <div class="col-md-6">
+                <img width="100" src="img/simulador.jpg"/>
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Simuladores de Crédito</div>
+            <div class="panel-body">
+
+
+                <form name="planPagos" role="form">
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="lineaCredito">Linea de credito:</label>
+                            <select id="lineaCredito"
+                                    required="true"
+                                    class="form-control"
+                                    ng-required="true"
+                                    ng-model="datosFormulario.linea"
+                                    data-ng-options="linea.nombre for linea in lineas track by linea.id"
+                                    >
+
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label for="cedula">C&eacute;dula:</label>
+                            <input type="text" 
+                                   id="cedula" 
+                                   class="form-control required"
+                                   required="true"
+                                   ng-required="true"
+                                   ng-model="datosFormulario.documento"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="fechaNacimiento">Fecha de nacimiento:</label>
+                            <input id="fechaNacimiento" 
+                               class="form-control datepicker required" 
+                               type="text" 
+                               value=""
+                               required="true"
+                               ng-required="true"/>
+                            <script>$('.datepicker').datepicker({format: 'dd/mm/yyyy', language: 'es'});</script>
+                        </div>
+
+                        <div class="form-group col-md-6">
+                            <label for="valor">Valor:</label>
+                            <input type="text" 
+                                   id="valor" 
+                                   class="form-control required"
+                                   required="true"
+                                   ng-required="true"
+                                   ng-model="datosFormulario.valor"/>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="form-group col-md-6">
+                            <label for="plazo">Plazo:</label>
+                            <input type="text" 
+                                   id="plazo" 
+                                   class="form-control required"
+                                   required="true"
+                                   ng-required="true"
+                                   ng-model="datosFormulario.plazo"/>
+                        </div>
+                    </div>
+                </form>
+                |{{id}} - {{generando}}|
+            </div>
+        </div>
+        <div class="panel panel-primary">
+            <div class="panel-heading">Detalle Plan de Pagos</div>
+            <div class="panel-body">
+
+            </div>
+        </div>
+    </div>
