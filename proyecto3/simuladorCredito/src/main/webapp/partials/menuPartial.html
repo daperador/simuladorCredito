@@ -15,12 +15,193 @@
                     <a href="#" class="navbar-brand">Simulador de Crédito</a>
                 </div>
                 <div id="bs-example-navbar-collapse-3" class="collapse navbar-collapse">
-                    <button class="btn btn-default navbar-btn" type="button" ng-click="">Líneas</button>
-                    <button class="btn btn-default navbar-btn" type="button" ng-click="">Planes de pago</button>
+                    <button class="btn btn-default navbar-btn" type="button" ng-click="crudLineas()">Líneas</button>
+                    <button class="btn btn-default navbar-btn" type="button" ng-click="listarPlanes()">Planes de pago</button>
                 </div>
             </div>
         </nav>
 
     </div>
+ 
+    
+        <div class="modal fade bs-example-modal-md in" id="dlgLineas" tabindex="-1" role="dialog" aria-labelledby="dlgLineas" aria-hidden="false">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="dlgConsulta">Líneas</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="text-left">
+                        <button class="btn btn-primary btn-sm" ng-click="nuevaLinea()">Nueva</button>
+                    </div>
+                    <hr />
 
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Id</th>
+                            <th>Nombre</th>
+                            <th>Tasa</th>
+                            <th>Acciones</th>
+                        </tr>
+                        <tr>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td><a ng-click="editarLinea()">Editar</a> | <a >Borrar</a></td>
+                        </tr>
+                        <tr>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td><a ng-click="editarLinea()">Editar</a> | <a >Borrar</a></td>
+                        </tr>
+                        <tr>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td>tit1</td>
+                            <td><a ng-click="editarLinea()" >Editar</a> | <a >Borrar</a></td>
+                        </tr>
+                    </table>
+                    <div class="text-center">
+                    <ul class="pagination  pagination-sm">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                      </ul>
+                    </div>
+                    <form name="formulario" role="form">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    
+    
+    <div class="modal fade bs-example-modal-md in" id="dlgLinea" tabindex="-1" role="dialog" aria-labelledby="dlgLinea" aria-hidden="false">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="dlgConsulta">Línea</h4>
+                </div>
+                <div class="modal-body">
+
+                    <form name="formulario" role="form">
+                        <div class="row">
+                            <div class="form-group col-md-6">
+                                <label>Nombre: </label>
+                                <input id="nombre" 
+                                       class="form-control required" 
+                                       required="true"
+                                       ng-required="true"
+                                       type="text" 
+                                       ng-model="datosFormulario.nombre"/>
+                            </div>
+                        </div>
+                        <div class="row">                        
+                            <div class="form-group col-md-6">
+                                <label>Tasa: </label>
+                                <input id="tasa" 
+                                       class="form-control required" 
+                                       required="true"
+                                       ng-required="true"
+                                       type="text" 
+                                       ng-model="datosFormulario.tasa"/>
+                            </div>
+                        </div>
+
+
+
+                    </form>
+                    <hr />
+                    <div class="text-right">
+                        <button class="btn btn-primary btn-sm" ng-click="guardarLinea()">Guardar</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    
+        <div class="modal fade bs-example-modal-md in" id="dlgPlanes"  tabindex="-1" role="dialog" aria-labelledby="dlgPlanes" aria-hidden="false">
+        <div class="modal-dialog modal-md">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+                    <h4 class="modal-title" id="dlgConsulta">Planes de pago</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="text-left">
+                        <button class="btn btn-primary btn-sm" ng-click="actualizarPlanes()">Actualizar</button>
+                    </div>
+                    <hr />
+
+                    <table class="table table-striped table-hover">
+                        <tr>
+                            <th>Cédula del solicitante</th>
+                            <th>Valor del crédito</th>
+                            <th>Plazo (Meses)</th>
+                            <th>Línea de crédito</th>
+                            <th>Estado</th>
+                            <th>Nivel de riesgo</th>
+                            <th>Fecha</th>
+                            <th>Detalle</th>
+                        </tr>
+                        <tr>
+                            <td>79799225</td>
+                            <td>25.000.000</td>
+                            <td>48</td>
+                            <td>Vehículo</td>
+                            <td>Generado</td>
+                            <td>6.0</td>
+                            <td>2014-10-15 7:00 am</td>
+                            <td><a ng-click="detallePlan()">Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td>79799225</td>
+                            <td>25.000.000</td>
+                            <td>48</td>
+                            <td>Vehículo</td>
+                            <td>Generado</td>
+                            <td>6.0</td>
+                            <td>2014-10-15 7:00 am</td>
+                            <td><a ng-click="detallePlan()">Ver</a></td>
+                        </tr>
+                        <tr>
+                            <td>79799225</td>
+                            <td>25.000.000</td>
+                            <td>48</td>
+                            <td>Vehículo</td>
+                            <td>Generado</td>
+                            <td>6.0</td>
+                            <td>2014-10-15 7:00 am</td>
+                            <td><a ng-click="detallePlan()">Ver</a></td>
+                        </tr>
+                    </table>
+                    <div class="text-center">
+                    <ul class="pagination  pagination-sm">
+                        <li><a href="#">&laquo;</a></li>
+                        <li><a href="#">1</a></li>
+                        <li><a href="#">2</a></li>
+                        <li><a href="#">3</a></li>
+                        <li><a href="#">4</a></li>
+                        <li><a href="#">5</a></li>
+                        <li><a href="#">&raquo;</a></li>
+                      </ul>
+                    </div>
+                    <form name="formulario" role="form">
+                    </form>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    
 </div>

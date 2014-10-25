@@ -22,9 +22,13 @@ import javax.ws.rs.core.MediaType;
 @Produces(MediaType.APPLICATION_JSON)
 public class LoginServicio {
     
+    
+//@Context HttpServletRequest r,
+    
     @POST
     public boolean login(Administrador usuario){
-            AdministradorDAO dao=new AdministradorDAO();
+
+        AdministradorDAO dao=new AdministradorDAO();
         Administrador a = dao.login(usuario);
         if (a==null){
             return false;
