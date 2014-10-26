@@ -5,7 +5,9 @@
  */
 package co.edu.uniandes.csw.simuladorcredito;
 
+import co.edu.uniandes.csw.simuladorcredito.dao.LineaDAO;
 import co.edu.uniandes.csw.simuladorcredito.dao.PlanPagoDAO;
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.PlanPago;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import javax.ws.rs.GET;
@@ -15,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 
 /**
  *
@@ -41,6 +44,16 @@ public class PlanPagoServicio {
         return new PlanPagoDAO().leer(PlanPago.class);
     }
     
+    @Path("/planPago/{id}")
+    @GET
+    public PlanPago getPlan(@PathParam("id") Long id){
+        return new PlanPagoDAO().leer(PlanPago.class, id);
+    }  
     
+    /*@Path("/cuotas/{id}")
+    @GET
+    public PlanPago getCuotas(@PathParam("id") Long id){
+        return new PlanPagoDAO().leer(PlanPago.class, id);
+    } */ 
     
 }

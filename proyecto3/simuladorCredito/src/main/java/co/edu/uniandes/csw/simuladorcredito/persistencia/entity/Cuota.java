@@ -5,8 +5,6 @@
  */
 package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
 
-import java.util.List;
-
 /**
  *
  * @author Daniel

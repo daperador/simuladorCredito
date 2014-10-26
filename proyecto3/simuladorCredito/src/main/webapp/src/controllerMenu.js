@@ -4,10 +4,10 @@
 var module = angular.module('simuladorCredito.controllers', []);
 
 module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
-    $scope.lineas=[
-      {id:1, nombre:'linea 1', tasa:9.23},
-      {id:2, nombre:'linea 2', tasa: 8.12}];
+    $scope.lineas=[];
+    $scope.planes=[];
     $scope.linea;
+    $scope.plan;
     $scope.administrador=1;
         
     $scope.crudLineas=function(){
@@ -72,11 +72,29 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
         });        
     };
     
+    $scope.cargarPlanes=function(){
+        $http.get('webresources/planPago/planesPago', {})
+        .success(function (data, status, headers, config) {
+            $scope.planes=data;
+        }).error(function (data, status, headers, config) {
+            alert('Error al consultar la información, por favor intente más tarde');
+        });        
+    };
+    
     $scope.listarPlanes=function(){
+        $scope.cargarPlanes();
         $('#dlgPlanes').modal();
     };
-    $scope.detallePlan=function(){
-        $('#dlgPlan').modal();
+    
+    $scope.detallePlan=function(planId){
+        $http.get('webresources/planPago/planPago/'+planId, {})
+        .success(function (data, status, headers, config) {
+            $scope.plan=data;
+            $('#dlgPlan').modal();
+        }).error(function (data, status, headers, config) {
+            alert('Error al consultar la información, por favor intente más tarde');
+        });        
+        
     };
     
     
