@@ -16,7 +16,7 @@ module.controller('inicioCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.aceptarRegistro=function(){
         $http.post('./webresources/registro', $scope.datosFormulario, {}
                 ).success(function(data, status, headers, config) {
-                    alert("Los datos han sido guardados con Exito: "+data.id);
+                    alert("Los datos han sido guardados con éxito: "+data.id);
                     $('#dlgRegistro').modal('toggle');
                 }).error(function(data, status, headers, config) {
                     alert('Error al consultar la información, por favor intente más tarde');
@@ -31,6 +31,7 @@ module.controller('inicioCtrl', ['$scope', '$http', function($scope, $http) {
                         alert("El email o contraseña son erróneos");
                     }else{
                         $('#dlgLogin').modal('toggle');
+                        //$location.path('./menu.html');
                         window.location.href='./menu.html';
                     }
                     

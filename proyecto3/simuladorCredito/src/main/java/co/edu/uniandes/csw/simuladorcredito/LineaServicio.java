@@ -10,6 +10,8 @@ import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
 import java.util.List;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
+import javax.ws.rs.POST;
+import javax.ws.rs.PUT;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
@@ -29,5 +31,22 @@ public class LineaServicio {
     public List<Linea> getLineasAdministrador(@PathParam("id") String id){
         return new LineaDAO().getLineaAdministrador(id);
     }
+
+    @Path("/linea/{id}")
+    @GET
+    public Linea getLinea(@PathParam("id") Long id){
+        return new LineaDAO().leer(Linea.class, id);
+    }
     
+    @Path("/linea/")
+    @POST
+    public Linea crearLinea(Linea linea){
+        return (Linea)new LineaDAO().insertar(linea);
+    }
+
+    @Path("/linea/")
+    @PUT
+    public void actualizarLinea(Linea linea){
+        new LineaDAO().actualizar(linea);
+    }
 }

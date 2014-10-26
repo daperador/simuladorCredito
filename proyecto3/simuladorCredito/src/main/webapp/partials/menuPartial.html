@@ -44,23 +44,11 @@
                             <th>Tasa</th>
                             <th>Acciones</th>
                         </tr>
-                        <tr>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td><a ng-click="editarLinea()">Editar</a> | <a >Borrar</a></td>
-                        </tr>
-                        <tr>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td><a ng-click="editarLinea()">Editar</a> | <a >Borrar</a></td>
-                        </tr>
-                        <tr>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td>tit1</td>
-                            <td><a ng-click="editarLinea()" >Editar</a> | <a >Borrar</a></td>
+                        <tr ng-repeat="linea in lineas">
+                            <td>{{linea.id}}</td>
+                            <td>{{linea.nombre}}</td>
+                            <td>{{linea.tasa}}</td>
+                            <td><a ng-click="editarLinea(linea.id)">Editar</a> | <a >Borrar</a></td>
                         </tr>
                     </table>
                     <div class="text-center">
@@ -102,7 +90,7 @@
                                        required="true"
                                        ng-required="true"
                                        type="text" 
-                                       ng-model="datosFormulario.nombre"/>
+                                       ng-model="linea.nombre"/>
                             </div>
                         </div>
                         <div class="row">                        
@@ -113,7 +101,7 @@
                                        required="true"
                                        ng-required="true"
                                        type="text" 
-                                       ng-model="datosFormulario.tasa"/>
+                                       ng-model="linea.tasa"/>
                             </div>
                         </div>
 
