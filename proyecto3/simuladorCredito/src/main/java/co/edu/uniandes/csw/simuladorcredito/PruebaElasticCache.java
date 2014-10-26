@@ -77,11 +77,8 @@ public class PruebaElasticCache {
     }
 
     private static void crearMensaje() throws Exception {
-        
-        
-        
-        
-        String configEndpoint = "myclustercache.vyqp3g.cfg.use1.cache.amazonaws.com";
+        String configEndpoint = "myclustercache.o78wts.cfg.usw2.cache.amazonaws.com";
+        //String configEndpoint = "myclustercache.vyqp3g.cfg.use1.cache.amazonaws.com";
         Integer clusterPort = 11211;
         MemcachedClient client = new MemcachedClient(new InetSocketAddress(configEndpoint, clusterPort)); 
         System.out.println(client.isConfigurationInitialized());
