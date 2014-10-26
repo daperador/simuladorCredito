@@ -11,13 +11,17 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.administrador=1;
         
     $scope.crudLineas=function(){
-        $http.get('webresources/linea/administrador/1', {})
+        $scope.cargarLineas();
+        $('#dlgLineas').modal();
+    };
+    
+    $scope.cargarLineas=function(){
+        $http.get('webresources/linea/administrador/'+$scope.administrador, {})
         .success(function (data, status, headers, config) {
             $scope.lineas=data;
         }).error(function (data, status, headers, config) {
             alert('Error al consultar la información, por favor intente más tarde');
         });        
-        $('#dlgLineas').modal();
     };
     
     $scope.editarLinea=function(lineaId){
@@ -38,6 +42,7 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
             $http.put('webresources/linea/linea', $scope.linea)
             .success(function (data, status, headers, config) {
                 $('#dlgLinea').modal('toggle');
+                $scope.cargarLineas();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la Línea, por favor intente más tarde');
             });
@@ -45,16 +50,27 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
             $http.post('webresources/linea/linea', $scope.linea)
             .success(function (data, status, headers, config) {
                 $('#dlgLinea').modal('toggle');
+                $scope.cargarLineas();
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la Línea, por favor intente más tarde');
             });
         }
+        
     };
     
     $scope.nuevaLinea=function(){
         $scope.linea={id:null, nombre:'', tasa:0.0, actividad:'crear', administrador: $scope.administrador};
         $('#dlgLinea').modal();
-    }
+    };
+    
+    $scope.eliminarLinea=function(lineaId){
+        $http.delete('webresources/linea/linea/'+lineaId, {})
+        .success(function (data, status, headers, config) {
+            $scope.cargarLineas();
+        }).error(function (data, status, headers, config) {
+            alert('Error al consultar la información, por favor intente más tarde');
+        });        
+    };
     
     $scope.listarPlanes=function(){
         $('#dlgPlanes').modal();

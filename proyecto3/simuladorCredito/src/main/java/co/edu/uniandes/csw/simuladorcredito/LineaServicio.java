@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.simuladorcredito.dao.LineaDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
 import java.util.List;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.PUT;
@@ -37,7 +38,13 @@ public class LineaServicio {
     public Linea getLinea(@PathParam("id") Long id){
         return new LineaDAO().leer(Linea.class, id);
     }
-    
+
+    @Path("/linea/{id}")
+    @DELETE
+    public void eliminarLinea(@PathParam("id") Long id){
+        new LineaDAO().eliminar(Linea.class, id);
+    }
+
     @Path("/linea/")
     @POST
     public Linea crearLinea(Linea linea){

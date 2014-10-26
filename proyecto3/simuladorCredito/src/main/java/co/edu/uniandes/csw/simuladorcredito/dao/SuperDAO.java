@@ -54,5 +54,8 @@ public class SuperDAO <T extends SuperPojo> {
         return (T)mapper.load(clase, llave);
     }
     
-    
+    public void eliminar(Class clase, Long llave){
+        mapper.delete(leer(clase, llave));
+    }
+
 }
