@@ -16,7 +16,7 @@ import java.util.List;
  * @author Fredy
  */
 public class AmortizacionFrances {
-    public List<Cuota> generarCuotas(Integer valor, Double tasa, Integer plazo, Integer idPlan){
+    public List<Cuota> generarCuotas(Integer valor, Double tasa, Integer plazo){
         Double cuota= valor / ((1-Math.pow(1+tasa/100, -plazo))/(tasa/100));
         System.out.println(cuota);
         List<Cuota> cuotas =new ArrayList<Cuota>();
@@ -32,7 +32,6 @@ public class AmortizacionFrances {
             c.setCapital(amortizacion);
             c.setTotal(cuota);
             c.setSaldo(Math.round(valor2*100)/100.0);
-            c.setIdPlan(new PlanPago(idPlan));
             
             cuotas.add(c);
             

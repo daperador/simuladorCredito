@@ -8,10 +8,9 @@ package co.edu.uniandes.cloud.simuladorcredito.negocio;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
-import co.edu.uniandes.cloud.simuladorcredito.persistencia.AdministradorPersistencia;
-import co.edu.uniandes.cloud.simuladorcredito.util.Constantes;
+import co.edu.uniandes.cloud.simuladorcredito.persistencia.PlanPagoDAO;
+import co.edu.uniandes.csw.simuladorcredito.utils.ColaWorkerUtil;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 //import javax.ejb.EJB;
 //import javax.ejb.Schedule;
@@ -28,24 +27,33 @@ public class Process {
     // "Insert Code > Add Business Method")
     
     //@EJB
-    private AdministradorPersistencia dao=new AdministradorPersistencia();
+    private PlanPagoDAO dao=new PlanPagoDAO();
     
     //@Schedule(minute = "*/3", hour="*", dayOfMonth = "*")
     public void procesar(){
-        System.out.println("Procesando..."+Calendar.getInstance());
-        
-        List<PlanPago> pps=dao.consultarPlanesEstado(Constantes.ESTADO_EN_PROCESO);
         AmortizacionFrances aa = new AmortizacionFrances();
-        for (PlanPago pp:pps){
-            List<Cuota> cuotas=aa.generarCuotas(pp.getValor(), pp.getIdLinea().getTasa(), pp.getPlazo(), pp.getId());
-            for (Cuota c:cuotas){
-                System.out.println(c);
-                dao.guardarCuota(c);
+        String mensaje=ColaWorkerUtil.leerMensaje();
+        //dejar ciclo infinito
+        while(mensaje!=null){
+            System.out.println("Procesando..."+mensaje+"-"+Calendar.getInstance());
+            PlanPago pp=dao.leer(PlanPago.class, new Long(mensaje));
+            if(pp.getLinea()!=null){
+                //generar cuota
+                List<Cuota> cuotas=aa.generarCuotas(
+                        pp.getValor(), 
+                        pp.getLinea().getTasa(), 
+                        pp.getPlazo());
+                pp.setCuotas(cuotas);
+                //calcular nivel de riesgo
+                pp.setNivelRiesgo(calcularNivelRiesgo());
+                //guardar cuota
+                dao.actualizar(pp);
             }
-            pp.setEstado(Constantes.ESTADO_GENERADO);
-            pp.setNivelRiesgo(this.calcularNivelRiesgo());
-            pp.setFechaModificacion(new Date());
-            dao.actualizarPlan(pp);
+            //eliminar mensaje
+            ColaWorkerUtil.borrarUltimoMensaje();
+            System.out.println("Finalizo "+mensaje+"-"+Calendar.getInstance());
+            //leer de la cola
+            mensaje=ColaWorkerUtil.leerMensaje();
         }
     }
     
