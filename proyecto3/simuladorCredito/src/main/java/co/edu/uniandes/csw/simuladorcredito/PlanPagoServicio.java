@@ -7,6 +7,8 @@ package co.edu.uniandes.csw.simuladorcredito;
 
 import co.edu.uniandes.csw.simuladorcredito.dao.PlanPagoDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.PlanPago;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import javax.ws.rs.GET;
 import co.edu.uniandes.csw.simuladorcredito.utils.ColaWorkerUtil;
 import co.edu.uniandes.csw.simuladorcredito.utils.RegistroException;
 import java.util.logging.Level;
@@ -32,5 +34,13 @@ public class PlanPagoServicio {
             throw new RegistroException("Error al guardar el plan de pagos");
         }
     }
+    
+    @Path("/planesPago")
+    @GET
+    public PaginatedScanList getPlanesPago(){
+        return new PlanPagoDAO().leer(PlanPago.class);
+    }
+    
+    
     
 }

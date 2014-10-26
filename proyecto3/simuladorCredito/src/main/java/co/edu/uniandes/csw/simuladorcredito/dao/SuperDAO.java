@@ -14,6 +14,7 @@ import com.amazonaws.auth.PropertiesCredentials;
 import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import java.io.File;
 import java.io.IOException;
 import java.util.logging.Level;
@@ -56,6 +57,10 @@ public class SuperDAO <T extends SuperPojo> {
     
     public void eliminar(Class clase, Long llave){
         mapper.delete(leer(clase, llave));
+    }
+    
+    public PaginatedScanList leer(Class clase){
+        return mapper.scan(clase, new DynamoDBScanExpression());
     }
 
 }
