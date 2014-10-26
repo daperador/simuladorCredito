@@ -6,8 +6,10 @@
 package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
 
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshalling;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 import java.util.Date;
+import java.util.List;
 
 /**
  *
@@ -26,7 +28,12 @@ public class PlanPago extends SuperPojo{
     private Double nivelRiesgo;
     private Date fechaNacimiento;
     private Date fechaModificacion;
-    private Linea Linea;
+
+    @DynamoDBMarshalling(marshallerClass = LineaMarshaller.class)
+    private Linea linea;
+    
+    @DynamoDBMarshalling(marshallerClass = CuotaMarshaller.class)
+    private List<Cuota> cuotas;
 
     public Long getId() {
         return id;
@@ -102,11 +109,19 @@ public class PlanPago extends SuperPojo{
     }
 
     public Linea getLinea() {
-        return Linea;
+        return linea;
     }
 
     public void setLinea(Linea Linea) {
-        this.Linea = Linea;
+        this.linea = Linea;
+    }
+
+    public List<Cuota> getCuotas() {
+        return cuotas;
+    }
+
+    public void setCuotas(List<Cuota> cuotas) {
+        this.cuotas = cuotas;
     }
 
     

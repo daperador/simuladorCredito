@@ -9,6 +9,7 @@ import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
 import co.edu.uniandes.csw.simuladorcredito.dao.SecuenciaDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
+import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.PlanPago;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Secuencia;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
 import com.amazonaws.auth.AWSCredentials;
@@ -58,11 +59,11 @@ public class PruebaDB {
 
         //crearTablaSecuencia();
         
-        Secuencia s=SecuenciaDAO.getInstancia().leer("Administrador");
-        System.out.println(s);
+//        Secuencia s=SecuenciaDAO.getInstancia().leer("Administrador");
+//        System.out.println(s);
         
         //crearTabla();
-        System.out.println(client.listTables().getTableNames().size());
+//        System.out.println(client.listTables().getTableNames().size());
 
 //        crearTablaLinea();
 //        crearTablaPlanPago();
@@ -70,8 +71,11 @@ public class PruebaDB {
 //        System.out.println(client.listTables().getTableNames().size());
 
         DynamoDBMapper mapper = new DynamoDBMapper(client);
+        PlanPago pp=mapper.load(PlanPago.class, 121L);
+        System.out.println("pp"+pp);
+        System.out.println("pp"+pp.getLinea());
         //createLinea(mapper);
-        consultarLinea(mapper);
+//        consultarLinea(mapper);
 //        /*Administrador adm=new Administrador();
 //        adm.setNombres("prueba 1");
 //        adm.setApellidos("prueba 2");
@@ -106,11 +110,11 @@ public class PruebaDB {
 //        
 //        System.out.println(cuantos);
 //        
-        AdministradorDAO dao=new AdministradorDAO();
-        Administrador entity=(Administrador)dao.leer(Administrador.class, 5L);
-        System.out.println(entity.getEmail());
-        System.out.println(entity.getPassword());
-        System.out.println(entity);
+//        AdministradorDAO dao=new AdministradorDAO();
+//        Administrador entity=(Administrador)dao.leer(Administrador.class, 5L);
+//        System.out.println(entity.getEmail());
+//        System.out.println(entity.getPassword());
+//        System.out.println(entity);
 //        
 //        
     }
