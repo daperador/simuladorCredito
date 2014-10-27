@@ -46,6 +46,7 @@ public class Process {
                 pp.setCuotas(cuotas);
                 //calcular nivel de riesgo
                 pp.setNivelRiesgo(calcularNivelRiesgo());
+                pp.setEstado("Generado");
                 //guardar cuota
                 dao.actualizar(pp);
             }
