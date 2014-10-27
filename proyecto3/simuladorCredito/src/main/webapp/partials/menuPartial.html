@@ -148,7 +148,7 @@
                             <td>{{plan.linea.nombre}}</td>
                             <td>{{plan.estado}}</td>
                             <td>{{plan.nivelRiesgo}}</td>
-                            <td>{{plan.fechaCreacion}}</td>
+                            <td>{{plan.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
                             <td><a ng-click="detallePlan(plan.id)">Ver</a></td>
                         </tr>
                     </table>
@@ -201,7 +201,7 @@
                             <td>
                                 <label for="fecha" class="col-sm-2 control-label">Fecha nacimiento</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="fecha" placeholder="Fecha de nacimiento" readonly="true" ng-model="plan.fechaNacimiento" />
+                                    <input type="text" class="form-control" id="fecha" placeholder="Fecha de nacimiento" readonly="true" ng-model="plan.fechaNacimiento | date:'dd/MM/yyyy HH:mm'" />
                                 </div>
                             </td>
                             <td>
@@ -246,13 +246,13 @@
                             <td>
                                 <label for="fechaCreacion" class="col-sm-2 control-label">Fecha creación</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="fechaCreacion" placeholder="Fecha de creación" readonly="true" ng-model="plan.fechaCreacion" />
+                                    <input type="text" class="form-control" id="fechaCreacion" placeholder="Fecha de creación" readonly="true" ng-model="plan.fechaCreacion | date:'dd/MM/yyyy HH:mm'" />
                                 </div>
                             </td>
                             <td>
                                 <label for="fechaModificacion" class="col-sm-2 control-label">Fecha modificación</label>
                                 <div class="col-sm-10">
-                                    <input type="text" class="form-control" id="fechaModificacion" placeholder="Fecha de modificación" readonly="true" ng-model="plan.fechaModificacion"/>
+                                    <input type="text" class="form-control" id="fechaModificacion" placeholder="Fecha de modificación" readonly="true" ng-model="plan.fechaModificacion | date:'dd/MM/yyyy HH:mm'"/>
                                 </div>
                             </td>
                         </tr>
