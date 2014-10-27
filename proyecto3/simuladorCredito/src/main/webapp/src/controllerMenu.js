@@ -101,7 +101,6 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
         }).error(function (data, status, headers, config) {
             alert('Error al consultar la información, por favor intente más tarde');
         });        
-        
     };
     
     

@@ -13,6 +13,7 @@ function getParameterByName(name) {
 module.controller('planPagosCtrl', ['$scope', '$http', function ($scope, $http) {
         $scope.generando=false;
         $scope.datosFormulario={};
+        $scope.plan;
         $http.get('webresources/linea/administrador/'+getParameterByName('id'), {})
         .success(function (data, status, headers, config) {
             $scope.lineas=data;
@@ -24,18 +25,24 @@ module.controller('planPagosCtrl', ['$scope', '$http', function ($scope, $http) 
             $scope.datosFormulario.fechaNacimiento=$('#fechaNacimiento').data().datepicker.viewDate.getTime();
             $http.post('webresources/planPago',$scope.datosFormulario,{})
             .success(function (data, status, headers, config) {
-                $scope.lineas=data;
-                $scope.actualizar=true;
-                $scope.id=data.id;
+                $scope.plan=data;
+                $scope.generando=true;
             }).error(function (data, status, headers, config) {
                 alert('Error al guardar la información, por favor intente más tarde');
             }); 
         };
+        
         $scope.limpiar = function(){
             $scope.datosFormulario={};
         };
-        $scope.actualizar = function(){
-            
-        };
+        
+    $scope.detallePlan=function(){
+        $http.get('webresources/planPago/planPago/'+$scope.plan.id, {})
+        .success(function (data, status, headers, config) {
+            $scope.plan=data;
+        }).error(function (data, status, headers, config) {
+            alert('Error al consultar la información, por favor intente más tarde');
+        });        
+    };
 
-    }]);
+}]);

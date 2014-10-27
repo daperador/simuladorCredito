@@ -29,6 +29,7 @@ public class PlanPagoServicio {
     @POST
     public PlanPago insertarPlanPagos(PlanPago planPago){
         try {
+            planPago.setEstado("En proceso");
             PlanPago plan=(PlanPago)new PlanPagoDAO().insertar(planPago);
             ColaWorkerUtil.crearMensaje(plan.getId().toString());
             return plan;
