@@ -9,11 +9,18 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.linea;
     $scope.plan;
     $scope.administrador=1;
+    $http.get('webresources/login/administrador/', {})
+        .success(function (data, status, headers, config) {
+            $scope.administrador=data;
+        }).error(function (data, status, headers, config) {
+            alert('Error al consultar la información, por favor intente más tarde');
+        }); 
         
     $scope.crudLineas=function(){
         $scope.cargarLineas();
         $('#dlgLineas').modal();
     };
+    
     
     $scope.cargarLineas=function(){
         $http.get('webresources/linea/administrador/'+$scope.administrador, {})
@@ -100,3 +107,4 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     
     
 }]);
+

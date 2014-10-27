@@ -20,6 +20,7 @@ import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBQueryExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedQueryList;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
 import com.amazonaws.services.dynamodbv2.model.AttributeDefinition;
 import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
@@ -56,7 +57,27 @@ public class PruebaDB {
     private static AmazonDynamoDBClient client ;
     
     public static void main(String[] args) {
-
+        AdministradorDAO dao=new AdministradorDAO();
+        
+        //dao.eliminar(Administrador.class, 2L);
+        //dao.eliminar(Administrador.class, 3L);
+        //dao.eliminar(Administrador.class, 4L);
+        //dao.eliminar(Administrador.class, 5L);
+        //dao.eliminar(Administrador.class, 6L);
+        //dao.eliminar(Administrador.class, 7L);
+        //dao.eliminar(Administrador.class, 8L);
+        //dao.eliminar(Administrador.class, 13L);
+        
+        
+        PaginatedScanList sl=dao.leer(Administrador.class);
+        for (int i=0; i<sl.size(); i++){
+            Administrador a=(Administrador)sl.get(i);
+            System.out.println(a.getId());
+            System.out.println(a.getEmail());
+            System.out.println(a.getPassword());
+            System.out.println();
+        }
+        
         //crearTablaSecuencia();
         
 //        Secuencia s=SecuenciaDAO.getInstancia().leer("Administrador");
@@ -70,10 +91,10 @@ public class PruebaDB {
         
 //        System.out.println(client.listTables().getTableNames().size());
 
-        DynamoDBMapper mapper = new DynamoDBMapper(client);
-        PlanPago pp=mapper.load(PlanPago.class, 121L);
-        System.out.println("pp"+pp);
-        System.out.println("pp"+pp.getLinea());
+//        DynamoDBMapper mapper = new DynamoDBMapper(client);
+//        PlanPago pp=mapper.load(PlanPago.class, 121L);
+//        System.out.println("pp"+pp);
+//        System.out.println("pp"+pp.getLinea());
         //createLinea(mapper);
 //        consultarLinea(mapper);
 //        /*Administrador adm=new Administrador();
