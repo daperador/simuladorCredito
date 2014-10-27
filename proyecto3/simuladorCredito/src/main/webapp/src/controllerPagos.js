@@ -34,6 +34,7 @@ module.controller('planPagosCtrl', ['$scope', '$http', function ($scope, $http) 
         
         $scope.limpiar = function(){
             $scope.datosFormulario={};
+            $scope.generando=false;
         };
         
     $scope.detallePlan=function(){
