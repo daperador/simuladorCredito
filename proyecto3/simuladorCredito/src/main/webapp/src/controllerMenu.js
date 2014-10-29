@@ -82,7 +82,7 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     };
     
     $scope.cargarPlanes=function(primero){
-        $http.get('webresources/planPago/planesPago/'+10+'/'+primero, {})
+        $http.get('webresources/planPago/planesPago/'+50+'/'+primero, {})
         .success(function (data, status, headers, config) {
             $scope.planes=data;
         }).error(function (data, status, headers, config) {
