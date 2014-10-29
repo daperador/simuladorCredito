@@ -15,8 +15,12 @@ import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
 import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
 import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ScanRequest;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import java.io.File;
 import java.io.IOException;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -63,4 +67,15 @@ public class SuperDAO <T extends SuperPojo> {
         return mapper.scan(clase, new DynamoDBScanExpression());
     }
 
+    public ScanResult leer(String clase, Integer cuantos, Map<String, AttributeValue> desdeKey){
+        
+        ScanRequest req = new ScanRequest();
+        req.setTableName(clase);
+        req.setLimit(cuantos);
+        if (desdeKey!=null)
+        {
+            req.setExclusiveStartKey(desdeKey);
+        }
+        return client.scan(req);
+    }
 }

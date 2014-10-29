@@ -9,15 +9,22 @@ import co.edu.uniandes.csw.simuladorcredito.dao.LineaDAO;
 import co.edu.uniandes.csw.simuladorcredito.dao.PlanPagoDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.PlanPago;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
-import javax.ws.rs.GET;
 import co.edu.uniandes.csw.simuladorcredito.utils.ColaWorkerUtil;
 import co.edu.uniandes.csw.simuladorcredito.utils.RegistroException;
+import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
+import com.amazonaws.services.dynamodbv2.model.AttributeValue;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.PathParam;
+import javax.ws.rs.core.Context;
 
 /**
  *
@@ -25,6 +32,9 @@ import javax.ws.rs.PathParam;
  */
 @Path("planPago")
 public class PlanPagoServicio {
+
+    @Context 
+    private HttpServletRequest request;    
     
     @POST
     public PlanPago insertarPlanPagos(PlanPago planPago){
@@ -43,6 +53,28 @@ public class PlanPagoServicio {
     @GET
     public PaginatedScanList getPlanesPago(){
         return new PlanPagoDAO().leer(PlanPago.class);
+    }
+    
+    @Path("/planesPago/{cuantos}/{primero}")
+    @GET
+    public ScanResult getPlanesPago(@PathParam("cuantos") Integer cuantos, @PathParam("primero") boolean primero){
+        String sessionId=null;
+        for (Cookie c:request.getCookies()){
+            if (c.getName().equals("sessionId")){
+                sessionId = c.getValue();
+                break;
+            }
+        }
+        if (primero){
+            LoginServicio.sesion2.remove(sessionId);
+        }
+        HashMap<String, AttributeValue> pps=null;
+        if (LoginServicio.sesion2.get(sessionId)!=null){
+            pps=(HashMap<String, AttributeValue>)LoginServicio.sesion2.get(sessionId);
+        }
+        ScanResult sr=new PlanPagoDAO().leer("PlanPago", cuantos, pps);
+        LoginServicio.sesion2.put(sessionId, sr.getLastEvaluatedKey());
+        return sr;
     }
     
     @Path("/planPago/{id}")

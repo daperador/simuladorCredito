@@ -51,19 +51,6 @@
                             <td><a ng-click="editarLinea(linea.id)">Editar</a> | <a ng-click="eliminarLinea(linea.id)">Borrar</a></td>
                         </tr>
                     </table>
-                    <div class="text-center">
-                    <ul class="pagination  pagination-sm">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                      </ul>
-                    </div>
-                    <form name="formulario" role="form">
-                    </form>
 
                 </div>
             </div>
@@ -141,28 +128,21 @@
                             <th>Fecha</th>
                             <th>Detalle</th>
                         </tr>
-                        <tr ng-repeat="plan in planes">
-                            <td>{{plan.documento}}</td>
-                            <td>{{plan.valor}}</td>
-                            <td>{{plan.plazo}}</td>
-                            <td>{{plan.linea.nombre}}</td>
-                            <td>{{plan.estado}}</td>
-                            <td>{{plan.nivelRiesgo}}</td>
-                            <td>{{plan.fechaCreacion | date:'dd/MM/yyyy HH:mm'}}</td>
-                            <td><a ng-click="detallePlan(plan.id)">Ver</a></td>
+                        <tr ng-repeat="plan in planes.items">
+                            <td>{{plan.id.n}}</td>
+                            <td>{{plan.valor.n}}</td>
+                            <td>{{plan.plazo.n}}</td>
+                            <td>{{plan.linea.s.substring(plan.linea.s.indexOf('nombre')+9,plan.linea.s.indexOf('tasa')-3)}}</td>
+                            <td>{{plan.estado.s}}</td>
+                            <td>{{plan.nivelRiesgo.n}}</td>
+                            <td>{{plan.fechaCreacion.s | date:'dd/MM/yyyy HH:mm'}}</td>
+                            <td><a ng-click="detallePlan(plan.id.n)">Ver</a></td>
                         </tr>
                     </table>
                     
                     <div class="text-center">
-                    <ul class="pagination  pagination-sm">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                      </ul>
+                        <button class="btn btn-default navbar-btn" type="button" ng-click="primeraPagina()">1</button>
+                        <button class="btn btn-default navbar-btn" type="button" ng-click="siguiente()">&raquo;</button>
                     </div>
                     <form name="formulario" role="form">
                     </form>
@@ -277,19 +257,6 @@
                             <td>{{cuota.saldo}}</td>
                         </tr>
                     </table>
-                    <div class="text-center">
-                    <ul class="pagination  pagination-sm">
-                        <li><a href="#">&laquo;</a></li>
-                        <li><a href="#">1</a></li>
-                        <li><a href="#">2</a></li>
-                        <li><a href="#">3</a></li>
-                        <li><a href="#">4</a></li>
-                        <li><a href="#">5</a></li>
-                        <li><a href="#">&raquo;</a></li>
-                      </ul>
-                    </div>
-                    <form name="formulario" role="form">
-                    </form>
 
                 </div>
             </div>

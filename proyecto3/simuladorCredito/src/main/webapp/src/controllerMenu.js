@@ -5,10 +5,12 @@ var module = angular.module('simuladorCredito.controllers', []);
 
 module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
     $scope.lineas=[];
-    $scope.planes=[];
+    $scope.planes;
     $scope.linea;
     $scope.plan;
     $scope.administrador=1;
+    $scope.ultimoKey=null;
+    
     $http.get('webresources/login/administrador/', {})
         .success(function (data, status, headers, config) {
             $scope.administrador=data;
@@ -79,17 +81,25 @@ module.controller('menuCtrl', ['$scope', '$http', function($scope, $http) {
         });        
     };
     
-    $scope.cargarPlanes=function(){
-        $http.get('webresources/planPago/planesPago', {})
+    $scope.cargarPlanes=function(primero){
+        $http.get('webresources/planPago/planesPago/'+10+'/'+primero, {})
         .success(function (data, status, headers, config) {
             $scope.planes=data;
         }).error(function (data, status, headers, config) {
             alert('Error al consultar la información, por favor intente más tarde');
-        });        
+        });
+    };
+    
+    $scope.primeraPagina=function(){
+        $scope.cargarPlanes(true);
+    };
+    
+    $scope.siguiente=function(){
+        $scope.cargarPlanes(false);
     };
     
     $scope.listarPlanes=function(){
-        $scope.cargarPlanes();
+        $scope.cargarPlanes(true);
         $('#dlgPlanes').modal();
     };
     

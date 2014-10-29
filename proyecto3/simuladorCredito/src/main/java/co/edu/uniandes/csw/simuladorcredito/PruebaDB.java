@@ -6,6 +6,7 @@
 package co.edu.uniandes.csw.simuladorcredito;
 
 import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
+import co.edu.uniandes.csw.simuladorcredito.dao.PlanPagoDAO;
 import co.edu.uniandes.csw.simuladorcredito.dao.SecuenciaDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
@@ -31,6 +32,7 @@ import com.amazonaws.services.dynamodbv2.model.KeySchemaElement;
 import com.amazonaws.services.dynamodbv2.model.LocalSecondaryIndex;
 import com.amazonaws.services.dynamodbv2.model.Projection;
 import com.amazonaws.services.dynamodbv2.model.ProvisionedThroughput;
+import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -69,14 +71,33 @@ public class PruebaDB {
         //dao.eliminar(Administrador.class, 13L);
         
         
-        PaginatedScanList sl=dao.leer(Administrador.class);
-        for (int i=0; i<sl.size(); i++){
-            Administrador a=(Administrador)sl.get(i);
-            System.out.println(a.getId());
-            System.out.println(a.getEmail());
-            System.out.println(a.getPassword());
-            System.out.println();
-        }
+        //PlanPagoDAO dao2=new PlanPagoDAO();
+        
+        Map<String, AttributeValue> ultimo=null;
+        
+        do{
+            System.out.println("\n***PAGINA");
+            ScanResult sl=dao.leer("PlanPago", 15, ultimo);
+            ultimo=sl.getLastEvaluatedKey();
+            List<Map<String, AttributeValue>> lista=sl.getItems();
+
+            for (int i=0; i<lista.size(); i++){
+                Map<String, AttributeValue> registro=(Map<String, AttributeValue>)lista.get(i);
+                for (String s:registro.keySet()){
+                    System.out.println(s +": "+registro.get(s));
+                    System.out.println("***2");
+                }
+                /*System.out.println(a.getId());
+                System.out.println(a.getEmail());
+                System.out.println(a.getPassword());*/
+                System.out.println("***1");
+
+            }
+        }while(ultimo!=null);
+        
+        
+        
+
         
         //crearTablaSecuencia();
         
