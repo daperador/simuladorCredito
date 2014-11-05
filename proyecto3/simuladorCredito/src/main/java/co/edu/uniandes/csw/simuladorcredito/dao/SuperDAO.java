@@ -31,7 +31,7 @@ import java.util.logging.Logger;
 public class SuperDAO <T extends SuperPojo> {
     static{
         try {
-            AWSCredentials credentials=new PropertiesCredentials(new File("c:/tmp/dynamo.properties"));
+            AWSCredentials credentials=new PropertiesCredentials(new File("/tmp/dynamo.properties"));
             client = new AmazonDynamoDBClient(credentials);
         } catch (IOException ex) {
             Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);

@@ -59,7 +59,7 @@ public class PruebaDB {
     private static AmazonDynamoDBClient client ;
     
     public static void main(String[] args) {
-        AdministradorDAO dao=new AdministradorDAO();
+        //AdministradorDAO dao=new AdministradorDAO();
         
         //dao.eliminar(Administrador.class, 2L);
         //dao.eliminar(Administrador.class, 3L);
@@ -73,7 +73,7 @@ public class PruebaDB {
         
         //PlanPagoDAO dao2=new PlanPagoDAO();
         
-        Map<String, AttributeValue> ultimo=null;
+        /*Map<String, AttributeValue> ultimo=null;
         
         do{
             System.out.println("\n***PAGINA");
@@ -87,14 +87,14 @@ public class PruebaDB {
                     System.out.println(s +": "+registro.get(s));
                     System.out.println("***2");
                 }
-                /*System.out.println(a.getId());
+                System.out.println(a.getId());
                 System.out.println(a.getEmail());
-                System.out.println(a.getPassword());*/
+                System.out.println(a.getPassword());
                 System.out.println("***1");
 
             }
         }while(ultimo!=null);
-        
+        */
         
         
 
@@ -152,11 +152,14 @@ public class PruebaDB {
 //        
 //        System.out.println(cuantos);
 //        
-//        AdministradorDAO dao=new AdministradorDAO();
-//        Administrador entity=(Administrador)dao.leer(Administrador.class, 5L);
-//        System.out.println(entity.getEmail());
-//        System.out.println(entity.getPassword());
-//        System.out.println(entity);
+        AdministradorDAO dao=new AdministradorDAO();
+        PaginatedScanList list=dao.leer(Administrador.class);
+        for (int i=0; i<list.size(); i++){
+            Administrador entity=(Administrador)list.get(i);
+            System.out.println(entity.getEmail());
+            System.out.println(entity.getPassword());
+            System.out.println();
+        }
 //        
 //        
     }
