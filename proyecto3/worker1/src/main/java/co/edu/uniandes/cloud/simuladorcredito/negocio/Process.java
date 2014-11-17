@@ -36,7 +36,7 @@ public class Process {
         //dejar ciclo infinito
         while(mensaje!=null){
             System.out.println("Procesando..."+mensaje+"-"+Calendar.getInstance());
-            PlanPago pp=dao.leer(PlanPago.class, new Long(mensaje));
+            PlanPago pp=dao.leer(new Long(mensaje));
             if(pp.getLinea()!=null){
                 //generar cuota
                 List<Cuota> cuotas=aa.generarCuotas(

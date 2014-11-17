@@ -7,13 +7,15 @@
 package co.edu.uniandes.cloud.simuladorcredito.persistencia;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.SuperPojo;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import java.io.File;
-import java.io.IOException;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoClient;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -22,23 +24,20 @@ import java.util.logging.Logger;
  * @author Fredy
  */
 public class SuperDAO <T extends SuperPojo> {
+    private static MongoClient mongoClient ;
+    protected static DB db ;
     static{
         try {
-            AWSCredentials credentials=new PropertiesCredentials(new File("c:/tmp/dynamo.properties"));
-            client = new AmazonDynamoDBClient(credentials);
-        } catch (IOException ex) {
+            mongoClient = new MongoClient( "localhost" , 27017 );
+            db = mongoClient.getDB( "Simulador" );
+        } catch (UnknownHostException ex) {
             Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
-        }
+        } 
     }
-    private static AmazonDynamoDBClient client;
-    protected static DynamoDBMapper mapper = new DynamoDBMapper(client);
+    protected DBCollection col;
     
-    public SuperPojo insertar(SuperPojo objeto){
+    /*public SuperPojo insertar(SuperPojo objeto){
         
-        //long cuantos=mapper.count(objeto.getClass(), new DynamoDBScanExpression());
-        //objeto.setId(cuantos+1);
         objeto.setId(SecuenciaDAO.getInstancia().getSiguiente(objeto.getClass()));
         mapper.save(objeto);
         return objeto;
@@ -46,11 +45,36 @@ public class SuperDAO <T extends SuperPojo> {
     
     public void actualizar(SuperPojo objeto){
         mapper.save(objeto);
+    }*/
+    
+    
+    
+    protected DBObject leerBD(String campo, Object valor){
+        BasicDBObject query = new BasicDBObject(campo, valor);
+        DBCursor cursor = col.find(query);
+        try {
+           if(cursor.hasNext()) {
+               return cursor.next();
+           }else{
+               return null;
+           }
+        } finally {
+           cursor.close();
+        }        
     }
     
-    public T leer(Class clase, Long llave){
-        return (T)mapper.load(clase, llave);
+    protected List<DBObject> leerVariosBD(String campo, Object valor){
+        List<DBObject> lista = new ArrayList();
+        BasicDBObject query = new BasicDBObject(campo, valor);
+        DBCursor cursor = col.find(query);
+        try {
+           while(cursor.hasNext()) {
+               lista.add(cursor.next());
+           }
+        } finally {
+           cursor.close();
+        }   
+        return lista;
     }
-    
     
 }

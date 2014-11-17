@@ -5,19 +5,18 @@
  */
 package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
-import java.util.List;
-
 /**
  *
- * @author Daniel
+ * @author Fredy
  */
-public class Cuota {
+public class Cuota extends SuperPojo{
     private Long id;
     private Integer numeroCuota;
     private Double intereses;
     private Double capital;
     private Double total;
     private Double saldo;
+    private Long idPlan;
 
     public Long getId() {
         return id;
@@ -65,6 +64,14 @@ public class Cuota {
 
     public void setSaldo(Double saldo) {
         this.saldo = saldo;
+    }
+
+    public Long getIdPlan() {
+        return idPlan;
+    }
+
+    public void setIdPlan(Long idPlan) {
+        this.idPlan = idPlan;
     }
     
     

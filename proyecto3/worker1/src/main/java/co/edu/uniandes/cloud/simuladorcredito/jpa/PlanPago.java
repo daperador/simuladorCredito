@@ -5,21 +5,18 @@
  */
 package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMarshalling;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
+
 import java.util.Date;
 import java.util.List;
 
 /**
  *
- * @author Daniel
+ * @author Fredy
  */
-@DynamoDBTable(tableName="PlanPago")
+
 public class PlanPago extends SuperPojo{
-    @DynamoDBHashKey(attributeName = "id")
+
     private Long id;
-    
     private Date fechaCreacion;
     private String documento;
     private Integer valor;
@@ -28,11 +25,7 @@ public class PlanPago extends SuperPojo{
     private Double nivelRiesgo;
     private Date fechaNacimiento;
     private Date fechaModificacion;
-
-    @DynamoDBMarshalling(marshallerClass = LineaMarshaller.class)
     private Linea linea;
-    
-    @DynamoDBMarshalling(marshallerClass = CuotaMarshaller.class)
     private List<Cuota> cuotas;
 
     public Long getId() {

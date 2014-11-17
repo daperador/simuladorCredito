@@ -5,16 +5,13 @@
  */
 package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
  *
- * @author Daniel
+ * @author Fredy
  */
-@DynamoDBTable(tableName="Linea")
 public class Linea extends SuperPojo{
-    @DynamoDBHashKey(attributeName = "id")
+
     private Long id;
     private String nombre;
     private Double tasa;

@@ -5,30 +5,27 @@
  */
 package co.edu.uniandes.cloud.simuladorcredito.jpa;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBAttribute;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBTable;
 
 /**
  *
- * @author Daniel
+ * @author Fredy
  */
-@DynamoDBTable(tableName="Administrador")
+
 public class Administrador extends SuperPojo{
     
-    @DynamoDBHashKey(attributeName = "id")
+
     private Long id;
     
-    @DynamoDBAttribute
+
     private String nombres;
     
-    @DynamoDBAttribute
+
     private String apellidos;
     
-    @DynamoDBAttribute
+
     private String email;
     
-    @DynamoDBAttribute
+
     private String password;
 
 

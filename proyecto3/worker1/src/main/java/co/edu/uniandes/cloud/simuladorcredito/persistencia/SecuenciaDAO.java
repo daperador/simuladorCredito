@@ -7,6 +7,9 @@
 package co.edu.uniandes.cloud.simuladorcredito.persistencia;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Secuencia;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
 import java.util.HashMap;
 
 /**
@@ -23,7 +26,7 @@ public class SecuenciaDAO extends SuperDAO{
     }
     
     private SecuenciaDAO(){
-        
+        col = db.getCollection("Secuencia");
     }
 
     public static SecuenciaDAO getInstancia() {
@@ -31,30 +34,43 @@ public class SecuenciaDAO extends SuperDAO{
     }
     
     public Secuencia leer(String llave){
-        Object s=mapper.load(Secuencia.class, llave);
-        if (s==null)
-            return null;
-        return (Secuencia)s;
+        BasicDBObject query = new BasicDBObject("tabla", llave);
+        DBCursor cursor = col.find(query);
+        try {
+           if(cursor.hasNext()) {
+               Secuencia s = new Secuencia();
+               DBObject obj=cursor.next();
+               s.setTabla((String)obj.get("tabla"));
+               s.setSecuencia((Long)obj.get("secuencia"));
+               return s;
+           }else{
+               return null;
+           }
+        } finally {
+           cursor.close();
+        }
     }     
    
     
     public Long getSiguiente(Class entidad){
         String tabla=entidad.toString();
+        System.out.print(tabla+": ");
         Long numeros[]=cache.get(tabla);
         if (numeros!=null){
             // existe en caché
             numeros[0]++;
             if (numeros[0]==numeros[1]){
-                Secuencia s=(Secuencia)leer(tabla);
+                Secuencia s=leer(tabla);
                 numeros[0]=s.getSecuencia()+1;
                 numeros[1]=s.getSecuencia()+TAMANO_CACHE;
-                
                 s.setSecuencia(s.getSecuencia()+TAMANO_CACHE);
-                mapper.save(s);
+                actualizar(s);
                 
                 cache.put(tabla, numeros);
+                System.out.println(numeros[0]);
                 return numeros[0];
             } else{
+                System.out.println(numeros[0]);
                 return numeros[0];
             }
         }else{
@@ -66,19 +82,32 @@ public class SecuenciaDAO extends SuperDAO{
                 s.setTabla(tabla);
                 s.setSecuencia(TAMANO_CACHE);
                 Long ns[]=new Long[]{1L, TAMANO_CACHE};
-                mapper.save(s);
+                insertar(s);
                 cache.put(tabla, ns);
+                System.out.println(1L);
                 return 1L;
             }else{
                 // Existe el registro en la tabla secuencia
                 Long ns[]=new Long[]{s.getSecuencia()+1, s.getSecuencia()+TAMANO_CACHE};
                 s.setSecuencia(s.getSecuencia()+TAMANO_CACHE);
-                mapper.save(s);
+                actualizar(s);
                 cache.put(tabla, ns);
+                System.out.println(ns[0]);
                 return ns[0];
             }
                 
         }
         
+    }
+    
+    public void actualizar(Secuencia s){
+        BasicDBObject doc = new BasicDBObject("tabla", s.getTabla());
+        BasicDBObject doc2 = new BasicDBObject("tabla", s.getTabla()).append("secuencia", s.getSecuencia());
+        col.update(doc, doc2);
+    }
+    
+    public void insertar(Secuencia s){
+        BasicDBObject doc = new BasicDBObject("tabla", s.getTabla()).append("secuencia", s.getSecuencia());
+        col.insert(doc);
     }
 }
