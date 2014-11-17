@@ -7,7 +7,6 @@ package co.edu.uniandes.csw.simuladorcredito;
 
 import co.edu.uniandes.csw.simuladorcredito.dao.AdministradorDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Administrador;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
 import java.math.BigInteger;
 import java.util.Hashtable;
 import java.util.Map;
@@ -32,7 +31,7 @@ import javax.ws.rs.core.MediaType;
 public class LoginServicio {
     
     private static Hashtable<String, Long> sesion = new Hashtable();
-    public static Hashtable<String, Map<String, AttributeValue>> sesion2 = new Hashtable();
+    public static Hashtable<String, Map<String, String>> sesion2 = new Hashtable();
     
     @Context 
     private HttpServletResponse response;

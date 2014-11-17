@@ -3,10 +3,12 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
+/**
+ * @author Fredy
+ */
 package co.edu.uniandes.csw.simuladorcredito.persistencia.entity;
 
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBHashKey;
+
 
 /**
  *

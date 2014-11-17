@@ -9,11 +9,7 @@ import co.edu.uniandes.csw.simuladorcredito.dao.LineaDAO;
 import co.edu.uniandes.csw.simuladorcredito.dao.PlanPagoDAO;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.PlanPago;
-import co.edu.uniandes.csw.simuladorcredito.utils.ColaWorkerUtil;
 import co.edu.uniandes.csw.simuladorcredito.utils.RegistroException;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ScanResult;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.logging.Level;
@@ -41,7 +37,6 @@ public class PlanPagoServicio {
         try {
             planPago.setEstado("En proceso");
             PlanPago plan=(PlanPago)new PlanPagoDAO().insertar(planPago);
-            ColaWorkerUtil.crearMensaje(plan.getId().toString());
             return plan;
         } catch (Exception ex) {
             Logger.getLogger(PlanPagoServicio.class.getName()).log(Level.SEVERE, null, ex);
@@ -49,7 +44,7 @@ public class PlanPagoServicio {
         }
     }
     
-    @Path("/planesPago")
+    /*@Path("/planesPago")
     @GET
     public PaginatedScanList getPlanesPago(){
         return new PlanPagoDAO().leer(PlanPago.class);

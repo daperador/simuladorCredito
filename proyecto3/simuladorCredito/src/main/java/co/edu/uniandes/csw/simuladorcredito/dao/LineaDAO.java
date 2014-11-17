@@ -6,26 +6,56 @@
 package co.edu.uniandes.csw.simuladorcredito.dao;
 
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Linea;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ComparisonOperator;
-import com.amazonaws.services.dynamodbv2.model.Condition;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DBObject;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  *
- * @author Daniel
+ * @author Fredy
  */
 public class LineaDAO extends SuperDAO<Linea>{
     
-    public List<Linea> getLineaAdministrador(String idAdministrador){
-        DynamoDBScanExpression dbscan = new DynamoDBScanExpression();
-        dbscan.addFilterCondition("administrador", 
-                new Condition()
-                        .withComparisonOperator(ComparisonOperator.EQ)
-                        .withAttributeValueList(new AttributeValue().withN(idAdministrador)));
-        
-        List<Linea> lista = mapper.scan(Linea.class, dbscan);
-        return lista;
+    public LineaDAO(){
+        col = db.getCollection("Linea");
+    }
+    
+    public Linea leer(Long llave){
+        DBObject doc=super.leerBD("id",llave);
+        Linea a=new Linea();
+        a.setId((Long)doc.get("id"));
+        a.setNombre((String)doc.get("nombre"));
+        a.setTasa((Double)doc.get("tasa"));
+        a.setAdministrador((Long)doc.get("administrador"));
+        return a;
+    }
+
+    public void actualizar(Linea s){
+        BasicDBObject doc = new BasicDBObject("id", s.getId());
+        BasicDBObject doc2 = new BasicDBObject("id", s.getId()).append("nombre", s.getNombre()).append("tasa", s.getTasa()).append("administrador", s.getAdministrador());
+        col.update(doc, doc2);
+    }
+    
+    public Linea insertar(Linea s){
+        s.setId(SecuenciaDAO.getInstancia().getSiguiente(s.getClass()));
+        BasicDBObject doc = new BasicDBObject("id", s.getId()).append("nombre", s.getNombre()).append("tasa", s.getTasa()).append("administrador", s.getAdministrador());
+        col.insert(doc);
+        return s;
+    }
+    
+    
+    public List<Linea> getLineaAdministrador(Long idAdministrador){
+        List<DBObject> documentos=super.leerVariosBD("administrador", idAdministrador);
+        List<Linea> lineas = new ArrayList();
+        for (DBObject doc:documentos){
+            Linea a=new Linea();
+            a.setId((Long)doc.get("id"));
+            a.setNombre((String)doc.get("nombre"));
+            a.setTasa((Double)doc.get("tasa"));
+            a.setAdministrador((Long)doc.get("administrador"));
+            lineas.add(a);
+        }
+        return lineas;
     }
 }

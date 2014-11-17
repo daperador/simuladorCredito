@@ -6,21 +6,18 @@
 
 package co.edu.uniandes.csw.simuladorcredito.dao;
 
-import co.edu.uniandes.csw.simuladorcredito.PruebaDB;
-import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.Secuencia;
 import co.edu.uniandes.csw.simuladorcredito.persistencia.entity.SuperPojo;
-import com.amazonaws.auth.AWSCredentials;
-import com.amazonaws.auth.PropertiesCredentials;
-import com.amazonaws.services.dynamodbv2.AmazonDynamoDBClient;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBMapper;
-import com.amazonaws.services.dynamodbv2.datamodeling.DynamoDBScanExpression;
-import com.amazonaws.services.dynamodbv2.datamodeling.PaginatedScanList;
-import com.amazonaws.services.dynamodbv2.model.AttributeValue;
-import com.amazonaws.services.dynamodbv2.model.ScanRequest;
-import com.amazonaws.services.dynamodbv2.model.ScanResult;
-import java.io.File;
-import java.io.IOException;
-import java.util.Map;
+import com.mongodb.BasicDBObject;
+import com.mongodb.DB;
+import com.mongodb.DBCollection;
+import com.mongodb.DBCursor;
+import com.mongodb.DBObject;
+import com.mongodb.MongoException;
+import com.mongodb.MongoURI;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -29,53 +26,48 @@ import java.util.logging.Logger;
  * @author Fredy
  */
 public class SuperDAO <T extends SuperPojo> {
+    private static MongoURI mongoClient ;
+    protected static DB db ;
     static{
         try {
-            AWSCredentials credentials=new PropertiesCredentials(new File("/tmp/dynamo.properties"));
-            client = new AmazonDynamoDBClient(credentials);
-        } catch (IOException ex) {
-            Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (IllegalArgumentException ex) {
-            Logger.getLogger(PruebaDB.class.getName()).log(Level.SEVERE, null, ex);
+            //ResourceBundle rb=ResourceBundle.getBundle("config");
+            mongoClient = new MongoURI(System.getenv("MONGOHQ_URL"));
+            db = mongoClient.connectDB();
+            db.authenticate(mongoClient.getUsername(), mongoClient.getPassword());
+        } catch (MongoException ex) {
+            Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (UnknownHostException ex) {
+            Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    private static AmazonDynamoDBClient client;
-    protected static DynamoDBMapper mapper = new DynamoDBMapper(client);
+    protected DBCollection col;
     
-    public SuperPojo insertar(SuperPojo objeto){
-        
-        //long cuantos=mapper.count(objeto.getClass(), new DynamoDBScanExpression());
-        //objeto.setId(cuantos+1);
-        objeto.setId(SecuenciaDAO.getInstancia().getSiguiente(objeto.getClass()));
-        mapper.save(objeto);
-        return objeto;
-    }
-    
-    public void actualizar(SuperPojo objeto){
-        mapper.save(objeto);
-    }
-    
-    public T leer(Class clase, Long llave){
-        return (T)mapper.load(clase, llave);
+    protected DBObject leerBD(String campo, Object valor){
+        BasicDBObject query = new BasicDBObject(campo, valor);
+        DBCursor cursor = col.find(query);
+        try {
+           if(cursor.hasNext()) {
+               return cursor.next();
+           }else{
+               return null;
+           }
+        } finally {
+           cursor.close();
+        }        
     }
     
-    public void eliminar(Class clase, Long llave){
-        mapper.delete(leer(clase, llave));
+    protected List<DBObject> leerVariosBD(String campo, Object valor){
+        List<DBObject> lista = new ArrayList();
+        BasicDBObject query = new BasicDBObject(campo, valor);
+        DBCursor cursor = col.find(query);
+        try {
+           while(cursor.hasNext()) {
+               lista.add(cursor.next());
+           }
+        } finally {
+           cursor.close();
+        }   
+        return lista;
     }
     
-    public PaginatedScanList leer(Class clase){
-        return mapper.scan(clase, new DynamoDBScanExpression());
-    }
-
-    public ScanResult leer(String clase, Integer cuantos, Map<String, AttributeValue> desdeKey){
-        
-        ScanRequest req = new ScanRequest();
-        req.setTableName(clase);
-        req.setLimit(cuantos);
-        if (desdeKey!=null)
-        {
-            req.setExclusiveStartKey(desdeKey);
-        }
-        return client.scan(req);
-    }
 }

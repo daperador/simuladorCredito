@@ -29,21 +29,21 @@ public class LineaServicio {
     
     @Path("/administrador/{id}")
     @GET
-    public List<Linea> getLineasAdministrador(@PathParam("id") String id){
+    public List<Linea> getLineasAdministrador(@PathParam("id") Long id){
         return new LineaDAO().getLineaAdministrador(id);
     }
 
     @Path("/linea/{id}")
     @GET
     public Linea getLinea(@PathParam("id") Long id){
-        return new LineaDAO().leer(Linea.class, id);
+        return new LineaDAO().leer(id);
     }
 
-    @Path("/linea/{id}")
+    /*@Path("/linea/{id}")
     @DELETE
     public void eliminarLinea(@PathParam("id") Long id){
-        new LineaDAO().eliminar(Linea.class, id);
-    }
+        new LineaDAO().eliminar(id);
+    }*/
 
     @Path("/linea/")
     @POST
