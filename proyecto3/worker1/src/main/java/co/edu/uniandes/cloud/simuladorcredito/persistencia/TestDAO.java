@@ -30,12 +30,8 @@ public class TestDAO {
         for (Cuota c : pp.getCuotas()){
             System.out.println(c.getNumeroCuota()+ " "+c.getCapital()+" "+c.getIntereses()+" "+c.getTotal()+" "+c.getSaldo());
         }
-        
-        
-        
-        
-        
     }
+    
     public static PlanPago leerPlan(PlanPago pp){
         PlanPagoDAO d = new PlanPagoDAO();
         return d.leer(pp.getId());
