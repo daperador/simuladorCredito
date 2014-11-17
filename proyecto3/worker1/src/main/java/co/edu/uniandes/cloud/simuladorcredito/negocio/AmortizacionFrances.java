@@ -7,7 +7,6 @@
 package co.edu.uniandes.cloud.simuladorcredito.negocio;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
-import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
 import java.util.ArrayList;
 import java.util.List;
 

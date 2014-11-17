@@ -58,9 +58,10 @@ public class PlanPagoDAO extends SuperDAO<PlanPago>{
         BasicDBObject doc3 = new BasicDBObject("id", s.getLinea().getId()).append("nombre", s.getLinea().getNombre()).append("tasa", s.getLinea().getTasa());
         BasicDBObject doc2 = new BasicDBObject("id", s.getId()).append("fechaCreacion", s.getFechaCreacion()).append("documento", s.getDocumento()).append("valor", s.getValor()).append("plazo", s.getPlazo()).append("estado", s.getEstado()).append("nivelRiesgo", s.getNivelRiesgo()).append("fechaNacimiento", s.getFechaNacimiento()).append("fechaModificacion", s.getFechaModificacion()).append("linea", doc3);
         col.insert(doc2);
-        
-        for (Cuota c:s.getCuotas()){
-            c.setIdPlan(s.getId());
+        if (s.getCuotas()!=null){
+            for (Cuota c:s.getCuotas()){
+                c.setIdPlan(s.getId());
+            }
         }
         
         new CuotaDAO().insertar(s.getCuotas());

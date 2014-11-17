@@ -39,10 +39,12 @@ public class CuotaDAO extends SuperDAO<Cuota>{
 
     
     public List<Cuota> insertar(List<Cuota> cuotas){
-        for (Cuota s:cuotas){
-            s.setId(SecuenciaDAO.getInstancia().getSiguiente(s.getClass()));
-            BasicDBObject doc = new BasicDBObject("id", s.getId()).append("numeroCuota", s.getNumeroCuota()).append("intereses", s.getIntereses()).append("capital", s.getCapital()).append("total", s.getTotal()).append("saldo", s.getSaldo()).append("idPlan", s.getIdPlan());
-            col.insert(doc);
+        if (cuotas!=null){
+            for (Cuota s:cuotas){
+                s.setId(SecuenciaDAO.getInstancia().getSiguiente(s.getClass()));
+                BasicDBObject doc = new BasicDBObject("id", s.getId()).append("numeroCuota", s.getNumeroCuota()).append("intereses", s.getIntereses()).append("capital", s.getCapital()).append("total", s.getTotal()).append("saldo", s.getSaldo()).append("idPlan", s.getIdPlan());
+                col.insert(doc);
+            }
         }
         return cuotas;
     }

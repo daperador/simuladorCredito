@@ -53,7 +53,7 @@ public class SecuenciaDAO extends SuperDAO{
    
     
     public Long getSiguiente(Class entidad){
-        String tabla=entidad.toString();
+        String tabla=entidad.getName();
         System.out.print(tabla+": ");
         Long numeros[]=cache.get(tabla);
         if (numeros!=null){

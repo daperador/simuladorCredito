@@ -16,6 +16,7 @@ import com.mongodb.MongoClient;
 import java.net.UnknownHostException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -28,26 +29,16 @@ public class SuperDAO <T extends SuperPojo> {
     protected static DB db ;
     static{
         try {
+            //ResourceBundle rb=ResourceBundle.getBundle("config");
             mongoClient = new MongoClient( "localhost" , 27017 );
             db = mongoClient.getDB( "Simulador" );
         } catch (UnknownHostException ex) {
             Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
-        } 
+        } catch(Exception ex){
+            Logger.getLogger(SuperDAO.class.getName()).log(Level.SEVERE, null, ex);
+        }
     }
     protected DBCollection col;
-    
-    /*public SuperPojo insertar(SuperPojo objeto){
-        
-        objeto.setId(SecuenciaDAO.getInstancia().getSiguiente(objeto.getClass()));
-        mapper.save(objeto);
-        return objeto;
-    }
-    
-    public void actualizar(SuperPojo objeto){
-        mapper.save(objeto);
-    }*/
-    
-    
     
     protected DBObject leerBD(String campo, Object valor){
         BasicDBObject query = new BasicDBObject(campo, valor);
