@@ -8,6 +8,7 @@ package co.edu.uniandes.cloud.simuladorcredito.negocio;
 
 import co.edu.uniandes.cloud.simuladorcredito.jpa.Cuota;
 import co.edu.uniandes.cloud.simuladorcredito.jpa.PlanPago;
+import co.edu.uniandes.cloud.simuladorcredito.persistencia.CuotaDAO;
 import co.edu.uniandes.cloud.simuladorcredito.persistencia.PlanPagoDAO;
 import com.rabbitmq.client.Channel;
 import com.rabbitmq.client.Connection;
@@ -40,6 +41,8 @@ import org.springframework.util.ErrorHandler;*/
 public class Process {
 
     private PlanPagoDAO dao=new PlanPagoDAO();
+    private CuotaDAO dao2=new CuotaDAO();
+    
     /*final ApplicationContext rabbitConfig = new AnnotationConfigApplicationContext(RabbitConfiguration.class);
     final ConnectionFactory rabbitConnectionFactory = rabbitConfig.getBean(ConnectionFactory.class);
     final Queue rabbitQueue = rabbitConfig.getBean(Queue.class);
@@ -77,6 +80,10 @@ public class Process {
                     pp.setEstado("Generado");
                     //guardar cuota
                     dao.actualizar(pp);
+                    for (Cuota c:pp.getCuotas()){
+                        c.setIdPlan(pp.getId());
+                    }
+                    dao2.insertar(pp.getCuotas());
                 }
                 System.out.println("Finalizo "+mensaje+"-"+Calendar.getInstance());
                 
@@ -133,6 +140,37 @@ public class Process {
                 */
         
     }
+
+    public void procesarLocal(long plan){
+
+                String mensaje = "1";
+                System.out.println(" [x] Received '" + mensaje + "'");
+                System.out.println("Procesando..."+mensaje+"-"+Calendar.getInstance());
+                PlanPago pp=dao.leer(plan);
+                if(pp.getLinea()!=null){
+                    //generar cuota
+                    List<Cuota> cuotas=aa.generarCuotas(
+                            pp.getValor(), 
+                            pp.getLinea().getTasa(), 
+                            pp.getPlazo());
+                    pp.setCuotas(cuotas);
+                    //calcular nivel de riesgo
+                    pp.setNivelRiesgo(calcularNivelRiesgo());
+                    pp.setEstado("Generado");
+                    //guardar cuota
+                    dao.actualizar(pp);
+                    for (Cuota c:pp.getCuotas()){
+                        c.setIdPlan(pp.getId());
+                    }
+                    dao2.insertar(pp.getCuotas());
+                }
+                System.out.println("Finalizo "+mensaje+"-"+Calendar.getInstance());
+                
+
+            
+        
+        
+    }
     
     public double calcularNivelRiesgo(){
         Calendar inicio=Calendar.getInstance();
@@ -148,5 +186,6 @@ public class Process {
     
     public static void main(String args[]){
         new Process().procesar();
+        //new Process().procesarLocal(61);
     }
 }
